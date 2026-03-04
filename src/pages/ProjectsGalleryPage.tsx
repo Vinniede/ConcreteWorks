@@ -1,183 +1,236 @@
-import { useState } from 'react';
-import { projects } from '../constants/projects';
-import { ProjectCard } from '../components/cards/ProjectCard';
-import { CalculatorModal } from '../components/modals/CalculatorModal';
+import { useState } from "react";
+import { projects } from "../constants/projects";
+import { ProjectCard } from "../components/cards/ProjectCard";
+import { CalculatorModal } from "../components/modals/CalculatorModal";
 
 export const ProjectsGalleryPage: React.FC = () => {
-  const [filter, setFilter] = useState<string>('all');
+  const [filter, setFilter] = useState<string>("all");
   const [showCalculator, setShowCalculator] = useState(false);
 
-  const filteredProjects = filter === 'all' 
-    ? projects 
-    : projects.filter(p => p.type === filter);
+  const filteredProjects =
+    filter === "all" ? projects : projects.filter((p) => p.type === filter);
 
   return (
     <div>
       {/* Hero Section */}
-      <div style={{
-        background: 'linear-gradient(135deg, var(--primary-blue), var(--primary-blue-light))',
-        color: 'white',
-        padding: '4rem 1rem',
-        textAlign: 'center',
-        marginBottom: '3rem'
-      }}>
-        <h1 style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>Our Projects</h1>
-        <p style={{ fontSize: '1.2rem', opacity: 0.95 }}>
+      <div
+        style={{
+          background:
+            "linear-gradient(135deg, var(--primary-blue), var(--primary-blue-light))",
+          color: "white",
+          padding: "4rem 1rem",
+          textAlign: "center",
+          marginBottom: "3rem",
+        }}
+      >
+        <h1 style={{ fontSize: "2.5rem", marginBottom: "1rem" }}>
+          Our Projects
+        </h1>
+        <p style={{ fontSize: "1.2rem", opacity: 0.95 }}>
           Showcasing beautiful paving installations across Kenya
         </p>
       </div>
 
-      <div style={{ width: '100%', maxWidth: '1200px', margin: '0 auto', padding: '0.5rem 1rem' }}>
+      <div
+        style={{
+          width: "100%",
+          maxWidth: "1200px",
+          margin: "0 auto",
+          padding: "0.5rem 1rem",
+        }}
+      >
         {/* Filter Buttons */}
-        <div style={{
-          display: 'flex',
-          gap: '1rem',
-          justifyContent: 'center',
-          marginBottom: '2rem',
-          flexWrap: 'wrap'
-        }}>
-          {['all', 'residential', 'commercial', 'municipal'].map(type => (
+        <div
+          style={{
+            display: "flex",
+            gap: "1rem",
+            justifyContent: "center",
+            marginBottom: "2rem",
+            flexWrap: "wrap",
+          }}
+        >
+          {["all", "residential", "commercial", "municipal"].map((type) => (
             <button
               key={type}
               onClick={() => setFilter(type)}
               style={{
-                padding: '0.75rem 1.5rem',
-                background: filter === type ? 'var(--accent-orange)' : 'var(--bg-secondary)',
-                color: filter === type ? 'white' : 'var(--text-primary)',
-                border: '2px solid ' + (filter === type ? 'var(--accent-orange)' : 'var(--gray-border)'),
-                borderRadius: 'var(--radius-md)',
-                fontWeight: '600',
-                cursor: 'pointer',
-                transition: 'all var(--transition-base)'
+                padding: "0.75rem 1.5rem",
+                background:
+                  filter === type
+                    ? "var(--accent-orange)"
+                    : "var(--bg-secondary)",
+                color: filter === type ? "white" : "var(--text-primary)",
+                border:
+                  "2px solid " +
+                  (filter === type
+                    ? "var(--accent-orange)"
+                    : "var(--gray-border)"),
+                borderRadius: "var(--radius-md)",
+                fontWeight: "600",
+                cursor: "pointer",
+                transition: "all var(--transition-base)",
               }}
               onMouseEnter={(e) => {
                 if (filter !== type) {
-                  e.currentTarget.style.background = 'var(--gray-light)';
+                  e.currentTarget.style.background = "var(--gray-light)";
                 }
               }}
               onMouseLeave={(e) => {
                 if (filter !== type) {
-                  e.currentTarget.style.background = 'var(--bg-secondary)';
+                  e.currentTarget.style.background = "var(--bg-secondary)";
                 }
               }}
             >
-              {type.charAt(0).toUpperCase() + type.slice(1).replace(/([A-Z])/g, ' $1')}
+              {type.charAt(0).toUpperCase() +
+                type.slice(1).replace(/([A-Z])/g, " $1")}
             </button>
           ))}
         </div>
 
         {/* Projects Grid */}
-        <div style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          gap: '1rem',
-          marginBottom: '4rem',
-          justifyContent: 'center',
-          width: '100%'
-        }}>
-          {filteredProjects.map(project => (
-            <div key={project.id} style={{ flex: '0 1 220px', minWidth: '200px', maxWidth: '300px' }}>
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "1rem",
+            marginBottom: "4rem",
+            justifyContent: "center",
+            width: "100%",
+          }}
+        >
+          {filteredProjects.map((project) => (
+            <div
+              key={project.id}
+              style={{
+                flex: "0 1 220px",
+                minWidth: "200px",
+                maxWidth: "300px",
+              }}
+            >
               <ProjectCard project={project} />
             </div>
           ))}
         </div>
 
         {/* Project Stats */}
-        <div style={{
-          background: 'var(--bg-secondary)',
-          padding: 'clamp(1.5rem, 3vw, 3rem) clamp(1rem, 2vw, 2rem)',
-          borderRadius: 'var(--radius-lg)',
-          marginBottom: '3rem',
-          textAlign: 'center'
-        }}>
-          <h2 style={{ marginBottom: '2rem' }}>Our Project Portfolio</h2>
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))',
-            gap: 'clamp(1rem, 2vw, 2rem)'
-          }}>
+        <div
+          style={{
+            background: "var(--bg-secondary)",
+            padding: "clamp(1.5rem, 3vw, 3rem) clamp(1rem, 2vw, 2rem)",
+            borderRadius: "var(--radius-lg)",
+            marginBottom: "3rem",
+            textAlign: "center",
+          }}
+        >
+          <h2 style={{ marginBottom: "2rem" }}>Our Project Portfolio</h2>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))",
+              gap: "clamp(1rem, 2vw, 2rem)",
+            }}
+          >
             <div>
-              <div style={{
-                fontSize: '2rem',
-                fontWeight: 'bold',
-                color: 'var(--primary-blue)',
-                marginBottom: '0.5rem'
-              }}>
+              <div
+                style={{
+                  fontSize: "2rem",
+                  fontWeight: "bold",
+                  color: "var(--primary-blue)",
+                  marginBottom: "0.5rem",
+                }}
+              >
                 {projects.length}+
               </div>
-              <div style={{ color: 'var(--text-secondary)' }}>Projects Completed</div>
-            </div>
-            <div>
-              <div style={{
-                fontSize: '2rem',
-                fontWeight: 'bold',
-                color: 'var(--primary-blue)',
-                marginBottom: '0.5rem'
-              }}>
-                {projects.filter(p => p.type === 'residential').length}+
+              <div style={{ color: "var(--text-secondary)" }}>
+                Projects Completed
               </div>
-              <div style={{ color: 'var(--text-secondary)' }}>Residential Projects</div>
             </div>
             <div>
-              <div style={{
-                fontSize: '2rem',
-                fontWeight: 'bold',
-                color: 'var(--primary-blue)',
-                marginBottom: '0.5rem'
-              }}>
+              <div
+                style={{
+                  fontSize: "2rem",
+                  fontWeight: "bold",
+                  color: "var(--primary-blue)",
+                  marginBottom: "0.5rem",
+                }}
+              >
+                {projects.filter((p) => p.type === "residential").length}+
+              </div>
+              <div style={{ color: "var(--text-secondary)" }}>
+                Residential Projects
+              </div>
+            </div>
+            <div>
+              <div
+                style={{
+                  fontSize: "2rem",
+                  fontWeight: "bold",
+                  color: "var(--primary-blue)",
+                  marginBottom: "0.5rem",
+                }}
+              >
                 10+
               </div>
-              <div style={{ color: 'var(--text-secondary)' }}>Years of Experience</div>
+              <div style={{ color: "var(--text-secondary)" }}>
+                Years of Experience
+              </div>
             </div>
           </div>
         </div>
       </div>
 
       {/* CALCULATOR SECTION */}
-      <div style={{
-        maxWidth: '1200px',
-        margin: '0 auto',
-        padding: '4rem 1rem',
-        textAlign: 'center'
-      }}>
-        <h2 style={{
-          fontSize: '2.5rem',
-          marginBottom: '1.5rem',
-          color: 'var(--primary-blue)',
-          fontWeight: 'bold'
-        }}>
+      <div
+        style={{
+          maxWidth: "1200px",
+          margin: "0 auto",
+          padding: "4rem 1rem",
+          textAlign: "center",
+        }}
+      >
+        <h2
+          style={{
+            fontSize: "2.5rem",
+            marginBottom: "1.5rem",
+            color: "var(--primary-blue)",
+            fontWeight: "bold",
+          }}
+        >
           💰 Plan Your Project Budget
         </h2>
-        <p style={{
-          fontSize: '1.1rem',
-          color: 'var(--text-secondary)',
-          marginBottom: '2rem',
-          maxWidth: '600px',
-          margin: '0 auto 2rem'
-        }}>
-          Use our cost calculator to estimate your project budget. Get instant quotes for materials, labor, and delivery.
+        <p
+          style={{
+            fontSize: "1.1rem",
+            color: "var(--text-secondary)",
+            marginBottom: "2rem",
+            maxWidth: "600px",
+            margin: "0 auto 2rem",
+          }}
+        >
+          Use our cost calculator to estimate your project budget. Get instant
+          quotes for materials, labor, and delivery.
         </p>
         <button
           onClick={() => setShowCalculator(true)}
           style={{
-            padding: '1rem 3rem',
-            fontSize: '1rem',
-            fontWeight: 'bold',
-            background: 'var(--accent-orange)',
-            color: 'white',
-            border: 'none',
-            borderRadius: 'var(--radius-lg)',
-            cursor: 'pointer',
-            transition: 'all 0.3s ease',
-            boxShadow: 'var(--shadow-lg)'
+            padding: "1rem 3rem",
+            fontSize: "1rem",
+            fontWeight: "bold",
+            background: "var(--accent-orange)",
+            color: "white",
+            border: "none",
+            borderRadius: "var(--radius-lg)",
+            cursor: "pointer",
+            transition: "all 0.3s ease",
+            boxShadow: "var(--shadow-lg)",
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.background = '#EA580C';
-            e.currentTarget.style.transform = 'translateY(-2px)';
+            e.currentTarget.style.background = "#EA580C";
+            e.currentTarget.style.transform = "translateY(-2px)";
           }}
           onMouseLeave={(e) => {
-            e.currentTarget.style.background = 'var(--accent-orange)';
-            e.currentTarget.style.transform = 'translateY(0)';
+            e.currentTarget.style.background = "var(--accent-orange)";
+            e.currentTarget.style.transform = "translateY(0)";
           }}
         >
           Open Calculator
@@ -185,36 +238,55 @@ export const ProjectsGalleryPage: React.FC = () => {
       </div>
 
       {/* CTA Section */}
-      <div style={{
-        background: 'linear-gradient(135deg, var(--primary-blue), var(--primary-blue-light))',
-        color: 'white',
-        padding: '4rem 1rem',
-        textAlign: 'center'
-      }}>
-        <h2 style={{ marginBottom: '1rem' }}>Ready to Start Your Project?</h2>
-        <p style={{ maxWidth: '600px', margin: '0 auto 2rem', fontSize: '1.1rem', opacity: 0.95 }}>
-          Let Gitau Concrete Works bring your vision to life. Contact us for a consultation and project quote.
-        </p>
-        <button style={{
-          background: 'var(--accent-orange)',
-          color: 'white',
-          border: 'none',
-          padding: '1rem 2rem',
-          fontSize: '1.1rem',
-          fontWeight: '600',
-          borderRadius: 'var(--radius-md)',
-          cursor: 'pointer',
-          transition: 'background var(--transition-base)'
+      <div
+        style={{
+          background:
+            "linear-gradient(135deg, var(--primary-blue), var(--primary-blue-light))",
+          color: "white",
+          padding: "4rem 1rem",
+          textAlign: "center",
         }}
-        onMouseEnter={(e) => { e.currentTarget.style.background = 'var(--accent-dark)'; }}
-        onMouseLeave={(e) => { e.currentTarget.style.background = 'var(--accent-orange)'; }}
+      >
+        <h2 style={{ marginBottom: "1rem" }}>Ready to Start Your Project?</h2>
+        <p
+          style={{
+            maxWidth: "600px",
+            margin: "0 auto 2rem",
+            fontSize: "1.1rem",
+            opacity: 0.95,
+          }}
+        >
+          Let Gitau Concrete Works bring your vision to life. Contact us for a
+          consultation and project quote.
+        </p>
+        <button
+          style={{
+            background: "var(--accent-orange)",
+            color: "white",
+            border: "none",
+            padding: "1rem 2rem",
+            fontSize: "1.1rem",
+            fontWeight: "600",
+            borderRadius: "var(--radius-md)",
+            cursor: "pointer",
+            transition: "background var(--transition-base)",
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = "var(--accent-dark)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = "var(--accent-orange)";
+          }}
         >
           Get Your Quote Today
         </button>
       </div>
 
       {/* Calculator Modal */}
-      <CalculatorModal isOpen={showCalculator} onClose={() => setShowCalculator(false)} />
+      <CalculatorModal
+        isOpen={showCalculator}
+        onClose={() => setShowCalculator(false)}
+      />
     </div>
   );
 };

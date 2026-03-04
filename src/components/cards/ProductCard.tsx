@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom';
-import { ProductType } from '../../constants/products';
+import { Link } from "react-router-dom";
+import { ProductType } from "../../constants/products";
 
 interface ProductCardProps {
   product: ProductType;

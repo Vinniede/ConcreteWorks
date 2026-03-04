@@ -1,4 +1,4 @@
-import { Project } from '../../constants/projects';
+import { Project } from "../../constants/projects";
 
 interface ProjectCardProps {
   project: Project;
@@ -6,9 +6,9 @@ interface ProjectCardProps {
 
 export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
   const typeColor = {
-    residential: '#3B82F6',
-    commercial: '#8B5CF6',
-    municipal: '#10B981'
+    residential: "#3B82F6",
+    commercial: "#8B5CF6",
+    municipal: "#10B981",
   };
 
   return (
@@ -22,11 +22,14 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
       <div className="project-card-content">
         <div className="project-header">
           <h3>{project.name}</h3>
-          <span className="project-type" style={{ background: typeColor[project.type] }}>
+          <span
+            className="project-type"
+            style={{ background: typeColor[project.type] }}
+          >
             {project.type.charAt(0).toUpperCase() + project.type.slice(1)}
           </span>
         </div>
-        
+
         <p className="project-description">{project.description}</p>
 
         {project.location && (

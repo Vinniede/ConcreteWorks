@@ -1,5 +1,5 @@
 /* Google Fonts Import */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap");
 
 /* ========================================
    ROOT VARIABLES - Design System
@@ -12,55 +12,57 @@
   --breakpoint-laptop: 1024px;
   --breakpoint-desktop: 1280px;
   --breakpoint-large-desktop: 1536px;
-  
+
   /* Colors - Construction Theme */
-  --primary-blue: #0066CC;
-  --primary-blue-light: #3B82F6;
-  --primary-blue-lighter: #DBEAFE;
-  
-  --construction-red: #DC2626;
-  --construction-red-light: #FEE2E2;
-  
-  --accent-orange: #F97316;
-  --accent-dark: #EA580C;
-  --accent-light: #FED7AA;
-  
-  --accent-yellow: #FBBF24;
-  --accent-yellow-light: #FEF3C7;
-  
-  --gray-concrete: #6B7280;
+  --primary-blue: #0066cc;
+  --primary-blue-light: #3b82f6;
+  --primary-blue-lighter: #dbeafe;
+
+  --construction-red: #dc2626;
+  --construction-red-light: #fee2e2;
+
+  --accent-orange: #f97316;
+  --accent-dark: #ea580c;
+  --accent-light: #fed7aa;
+
+  --accent-yellow: #fbbf24;
+  --accent-yellow-light: #fef3c7;
+
+  --gray-concrete: #6b7280;
   --gray-dark: #111827;
-  --gray-light: #F9FAFB;
-  --gray-medium: #9CA3AF;
-  --gray-border: #E5E7EB;
-  
+  --gray-light: #f9fafb;
+  --gray-medium: #9ca3af;
+  --gray-border: #e5e7eb;
+
   --text-primary: #111827;
-  --text-secondary: #6B7280;
-  --text-tertiary: #9CA3AF;
-  --text-light: #FFFFFF;
-  
-  --bg-primary: #FFFFFF;
-  --bg-secondary: #F9FAFB;
-  --bg-tertiary: #F3F4F6;
-  
+  --text-secondary: #6b7280;
+  --text-tertiary: #9ca3af;
+  --text-light: #ffffff;
+
+  --bg-primary: #ffffff;
+  --bg-secondary: #f9fafb;
+  --bg-tertiary: #f3f4f6;
+
   /* Shadows */
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-md:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
   --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-  
+
   /* Border Radius */
   --radius-sm: 0.375rem;
   --radius-md: 0.5rem;
   --radius-lg: 0.75rem;
   --radius-xl: 1rem;
   --radius-full: 9999px;
-  
+
   /* Transitions */
   --transition-fast: 150ms ease-in-out;
   --transition-base: 300ms ease-in-out;
   --transition-slow: 500ms ease-in-out;
-  
+
   /* Container */
   --container-max: 1440px;
 }
@@ -79,8 +81,19 @@ html {
 }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    "Roboto",
+    "Oxygen",
+    "Ubuntu",
+    "Cantarell",
+    "Fira Sans",
+    "Droid Sans",
+    "Helvetica Neue",
+    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: var(--text-primary);
@@ -89,8 +102,13 @@ body {
 }
 
 /* Typography */
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Poppins', sans-serif;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Poppins", sans-serif;
   font-weight: 700;
   line-height: 1.2;
 }
@@ -129,7 +147,7 @@ a:hover {
 
 /* Buttons */
 button {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   font-weight: 600;
   cursor: pointer;
   border: none;
@@ -149,12 +167,14 @@ button:active {
 input,
 select,
 textarea {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   border: 1px solid var(--gray-border);
   border-radius: var(--radius-md);
   padding: 0.75rem;
   font-size: 1rem;
-  transition: border-color var(--transition-base), box-shadow var(--transition-base);
+  transition:
+    border-color var(--transition-base),
+    box-shadow var(--transition-base);
 }
 
 input:focus,
@@ -167,7 +187,7 @@ textarea:focus {
 
 textarea {
   resize: vertical;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
 }
 
 /* ========================================
@@ -402,7 +422,7 @@ textarea {
 }
 
 .product-use-cases li:before {
-  content: '•';
+  content: "•";
   position: absolute;
   left: -0.5rem;
   color: var(--accent-orange);
@@ -529,7 +549,7 @@ textarea {
 }
 
 .features-list li:before {
-  content: '✓';
+  content: "✓";
   position: absolute;
   left: 0;
   color: var(--accent-orange);
@@ -652,7 +672,7 @@ textarea {
 }
 
 .service-features li:before {
-  content: '✓';
+  content: "✓";
   position: absolute;
   left: -0.5rem;
   color: var(--accent-orange);
@@ -691,7 +711,7 @@ textarea {
 }
 
 .inquiry-btn:hover {
-  background: #B91C1C;
+  background: #b91c1c;
 }
 
 /* ========================================
@@ -964,7 +984,7 @@ textarea {
 }
 
 .project-features li:before {
-  content: '•';
+  content: "•";
   position: absolute;
   left: 0;
   color: var(--accent-orange);
@@ -1003,7 +1023,8 @@ textarea {
     gap: 1rem;
   }
 
-  nav a, nav button {
+  nav a,
+  nav button {
     font-size: 0.9rem;
   }
 }
@@ -1036,7 +1057,7 @@ button {
 .alert-warning {
   background: var(--accent-yellow-light);
   border-left: 4px solid var(--accent-yellow);
-  color: #78350F;
+  color: #78350f;
   padding: 1rem;
   border-radius: var(--radius-md);
 }
@@ -1044,7 +1065,7 @@ button {
 .alert-danger {
   background: var(--construction-red-light);
   border-left: 4px solid var(--construction-red);
-  color: #7F1D1D;
+  color: #7f1d1d;
   padding: 1rem;
   border-radius: var(--radius-md);
 }
@@ -1092,7 +1113,7 @@ button {
 }
 
 .btn-primary:hover {
-  background: #0052A3;
+  background: #0052a3;
   transform: translateY(-2px);
   box-shadow: var(--shadow-lg);
 }
@@ -1109,7 +1130,7 @@ button {
 }
 
 .btn-danger:hover {
-  background: #B91C1C;
+  background: #b91c1c;
   transform: translateY(-2px);
   box-shadow: var(--shadow-lg);
 }
@@ -1126,7 +1147,7 @@ button {
 }
 
 .btn-warning:hover {
-  background: #D97706;
+  background: #d97706;
   transform: translateY(-2px);
   box-shadow: var(--shadow-lg);
 }
@@ -1169,7 +1190,9 @@ button {
     padding: 1rem 0.75rem !important;
   }
 
-  .btn-primary, .btn-danger, .btn-warning {
+  .btn-primary,
+  .btn-danger,
+  .btn-warning {
     padding: 0.6rem 1.2rem !important;
     font-size: 0.85rem !important;
   }
@@ -1239,7 +1262,8 @@ button {
     padding: 1rem !important;
   }
 
-  nav a, nav button {
+  nav a,
+  nav button {
     font-size: 0.9rem !important;
   }
 
@@ -1314,7 +1338,8 @@ button {
     flex: 1 !important;
   }
 
-  footer h3, footer h4 {
+  footer h3,
+  footer h4 {
     font-size: 0.95rem !important;
     margin-bottom: 0.5rem !important;
   }
@@ -1401,7 +1426,9 @@ button {
 
 /* Input and Form Responsiveness */
 @media (max-width: 479px) {
-  input, textarea, select {
+  input,
+  textarea,
+  select {
     font-size: 16px !important; /* Prevents zoom on iOS */
   }
 
@@ -1477,7 +1504,7 @@ video {
   [style*="max-width: 1200px"] {
     padding: 1rem !important;
   }
-  
+
   h1 {
     font-size: 2rem !important;
   }
@@ -1517,7 +1544,8 @@ video {
     padding: 0.75rem 1rem !important;
   }
 
-  button, a[style*="background"] {
+  button,
+  a[style*="background"] {
     font-size: 0.9rem !important;
   }
 }
@@ -1539,7 +1567,7 @@ video {
    ======================================== */
 @media (max-width: 479px) {
   div[style*="maxWidth: 1200px"],
-  div[style*="maxWidth: 1000px"],  
+  div[style*="maxWidth: 1000px"],
   div[style*="maxWidth: 900px"],
   div[style*="maxWidth: 800px"],
   div[style*="maxWidth: 700px"] {

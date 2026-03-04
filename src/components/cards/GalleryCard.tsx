@@ -1,9 +1,15 @@
-import { Project } from '../../constants/projects';
-import { colors, spacing, typography, shadows, borderRadius } from '../../constants/colors';
+import { Project } from "../../constants/projects";
+import {
+  colors,
+  spacing,
+  typography,
+  shadows,
+  borderRadius,
+} from "../../constants/colors";
 
 interface GalleryCardProps {
-  project: Project
-  onView?: (project: Project) => void
+  project: Project;
+  onView?: (project: Project) => void;
 }
 
 const GalleryCard = ({ project, onView }: GalleryCardProps) => {
@@ -11,11 +17,11 @@ const GalleryCard = ({ project, onView }: GalleryCardProps) => {
     <div
       style={{
         borderRadius: borderRadius.lg,
-        overflow: 'hidden',
+        overflow: "hidden",
         boxShadow: shadows.md,
-        transition: 'all 0.3s ease-in-out',
-        cursor: 'pointer',
-        position: 'relative',
+        transition: "all 0.3s ease-in-out",
+        cursor: "pointer",
+        position: "relative",
       }}
       onMouseEnter={(e) => {
         e.currentTarget.style.boxShadow = shadows.lg;
@@ -28,53 +34,53 @@ const GalleryCard = ({ project, onView }: GalleryCardProps) => {
       {/* Image Container */}
       <div
         style={{
-          position: 'relative',
+          position: "relative",
           backgroundColor: colors.gray.light,
-          paddingBottom: '100%',
-          overflow: 'hidden',
+          paddingBottom: "100%",
+          overflow: "hidden",
         }}
       >
         <img
           src={project.image}
           alt={project.name}
           style={{
-            position: 'absolute',
+            position: "absolute",
             top: 0,
             left: 0,
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover',
-            transition: 'transform 0.3s ease-in-out',
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            transition: "transform 0.3s ease-in-out",
           }}
           onMouseEnter={(e) => {
             const target = e.currentTarget as HTMLImageElement;
-            target.style.transform = 'scale(1.05)';
+            target.style.transform = "scale(1.05)";
           }}
           onMouseLeave={(e) => {
             const target = e.currentTarget as HTMLImageElement;
-            target.style.transform = 'scale(1)';
+            target.style.transform = "scale(1)";
           }}
         />
 
         {/* Overlay */}
         <div
           style={{
-            position: 'absolute',
+            position: "absolute",
             top: 0,
             left: 0,
             right: 0,
             bottom: 0,
-            backgroundColor: 'rgba(30, 58, 138, 0.7)',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
+            backgroundColor: "rgba(30, 58, 138, 0.7)",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
             gap: spacing[2],
           }}
         >
           <div
             style={{
-              fontSize: '2.5rem',
+              fontSize: "2.5rem",
               color: colors.text.light,
             }}
           >
@@ -94,7 +100,7 @@ const GalleryCard = ({ project, onView }: GalleryCardProps) => {
         {/* Category Badge */}
         <div
           style={{
-            position: 'absolute',
+            position: "absolute",
             top: spacing[3],
             left: spacing[3],
             backgroundColor: colors.accent.orange,

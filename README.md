@@ -39,23 +39,27 @@ Gitau Concrete Works is a modern, responsive website showcasing high-quality con
 ## Getting Started
 
 ### Prerequisites
+
 - Node.js (v16 or higher)
 - npm or yarn
 
 ### Installation
 
 1. Clone the repository:
+
 ```bash
 git clone https://github.com/yourusername/ConcreteWorks.git
 cd ConcreteWorks
 ```
 
 2. Install dependencies:
+
 ```bash
 npm install --legacy-peer-deps
 ```
 
 3. Install server dependencies:
+
 ```bash
 cd server
 npm install --legacy-peer-deps
@@ -65,6 +69,7 @@ cd ..
 ### Development
 
 Start the development server:
+
 ```bash
 npm run dev
 ```
@@ -74,6 +79,7 @@ The application will be available at `http://localhost:5173`
 ### Building
 
 Build for production:
+
 ```bash
 npm run build
 ```
@@ -113,27 +119,32 @@ Build output will be in the `dist/` directory.
 ## Features
 
 ### Responsive Design
+
 - Mobile-first approach
 - Hamburger menu for mobile devices
 - Optimized layouts for all screen sizes
 - Touch-friendly interface
 
 ### Video Integration
+
 - Background videos in hero sections
 - Category showcase videos
 - MP4 format for wide browser support
 
 ### Product Categories
+
 - Cabro Paving Blocks
 - Cobblestones
 - Kerbstones
 
 ### Design Patterns
+
 - Multiple design options
 - Pattern visualizer
 - Category-based organization
 
 ### Projects Gallery
+
 - Completed project showcase
 - Client testimonials ready (for future implementation)
 - Project details and specifications

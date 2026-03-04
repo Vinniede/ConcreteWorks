@@ -1,4 +1,4 @@
-import { Service } from '../../constants/services';
+import { Service } from "../../constants/services";
 
 interface ServiceCardProps {
   service: Service;
@@ -13,7 +13,7 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({ service }) => {
       <div className="service-card-content">
         <h3>{service.name}</h3>
         <p className="service-description">{service.description}</p>
-        
+
         <div className="service-features">
           <strong>What's Included:</strong>
           <ul>
@@ -26,7 +26,7 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({ service }) => {
         {service.areas && (
           <div className="service-areas">
             <strong>Suitable For:</strong>
-            <p>{service.areas.join(' • ')}</p>
+            <p>{service.areas.join(" • ")}</p>
           </div>
         )}
 
