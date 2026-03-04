@@ -336,6 +336,36 @@ export const Navbar: React.FC = () => {
             </Link>
 
             <Link
+              to="/about"
+              style={getNavLinkStyle(isActive("/about"))}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.color = "#FFD700";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.color = isActive("/about")
+                  ? "#FFD700"
+                  : "white";
+              }}
+            >
+              About
+            </Link>
+
+            <Link
+              to="/resources"
+              style={getNavLinkStyle(isActive("/resources"))}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.color = "#FFD700";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.color = isActive("/resources")
+                  ? "#FFD700"
+                  : "white";
+              }}
+            >
+              Resources
+            </Link>
+
+            <Link
               to="/contact"
               style={{
                 background: isActive("/contact") ? "#FFB700" : "#FF9D00",
@@ -498,6 +528,40 @@ export const Navbar: React.FC = () => {
               }}
             >
               Services
+            </Link>
+
+            <Link
+              to="/about"
+              onClick={() => setShowMobileMenu(false)}
+              style={{
+                padding: "1rem",
+                color: isActive("/about") ? "#FFD700" : "white",
+                textDecoration: "none",
+                fontWeight: "600",
+                borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
+                background: isActive("/about")
+                  ? "rgba(255, 215, 0, 0.1)"
+                  : "transparent",
+              }}
+            >
+              About
+            </Link>
+
+            <Link
+              to="/resources"
+              onClick={() => setShowMobileMenu(false)}
+              style={{
+                padding: "1rem",
+                color: isActive("/resources") ? "#FFD700" : "white",
+                textDecoration: "none",
+                fontWeight: "600",
+                borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
+                background: isActive("/resources")
+                  ? "rgba(255, 215, 0, 0.1)"
+                  : "transparent",
+              }}
+            >
+              Resources
             </Link>
 
             <Link

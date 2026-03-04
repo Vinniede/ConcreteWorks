@@ -3,8 +3,10 @@ import { useState } from "react";
 import { productCategories, allProducts } from "../constants/products";
 import { cabroDesigns } from "../constants/designs";
 import { projects } from "../constants/projects";
+import { testimonials } from "../constants/testimonials";
 import { CalculatorModal } from "../components/modals/CalculatorModal";
 import { DesignVisualizer } from "../components/modals/DesignVisualizer";
+import { TestimonialCard } from "../components/cards/TestimonialCard";
 
 export const HomePage: React.FC = () => {
   const [showCalculator, setShowCalculator] = useState(false);
@@ -845,6 +847,267 @@ export const HomePage: React.FC = () => {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* TESTIMONIALS SECTION */}
+      <section
+        style={{
+          padding: "4rem 1rem",
+          maxWidth: "1200px",
+          margin: "0 auto",
+          background: "#F9FAFB",
+        }}
+      >
+        <div style={{ textAlign: "center", marginBottom: "3rem" }}>
+          <h2
+            style={{
+              fontSize: "2.5rem",
+              marginBottom: "1rem",
+              fontWeight: "bold",
+              color: "#1E3A8A",
+            }}
+          >
+            What Our Clients Say
+          </h2>
+          <p
+            style={{
+              fontSize: "1.1rem",
+              color: "#6B7280",
+              maxWidth: "600px",
+              margin: "0 auto",
+              lineHeight: "1.6",
+            }}
+          >
+            Trusted by residential, commercial, and municipal clients across Kenya
+          </p>
+        </div>
+
+        <div className="grid-3" style={{ gap: "2rem", marginBottom: "2rem" }}>
+          {testimonials.slice(0, 3).map((testimonial) => (
+            <TestimonialCard key={testimonial.id} testimonial={testimonial} />
+          ))}
+        </div>
+
+        <div style={{ textAlign: "center" }}>
+          <Link
+            to="/testimonials"
+            style={{
+              color: "var(--primary-blue)",
+              textDecoration: "none",
+              fontWeight: "bold",
+              fontSize: "1.05rem",
+              display: "inline-block",
+              gap: "0.5rem",
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.color = "var(--accent-orange)";
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.color = "var(--primary-blue)";
+            }}
+          >
+            View All Testimonials →
+          </Link>
+        </div>
+      </section>
+
+      {/* STATS SECTION */}
+      <section
+        style={{
+          background: "linear-gradient(135deg, var(--primary-blue), #0052A3)",
+          color: "white",
+          padding: "4rem 1rem",
+        }}
+      >
+        <div
+          style={{
+            maxWidth: "1200px",
+            margin: "0 auto",
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+            gap: "2rem",
+            textAlign: "center",
+          }}
+        >
+          <div>
+            <div
+              style={{
+                fontSize: "3rem",
+                fontWeight: "bold",
+                color: "#FFD700",
+                marginBottom: "0.5rem",
+              }}
+            >
+              15+
+            </div>
+            <div style={{ fontSize: "1.1rem", opacity: 0.95 }}>
+              Years of Experience
+            </div>
+          </div>
+          <div>
+            <div
+              style={{
+                fontSize: "3rem",
+                fontWeight: "bold",
+                color: "#FFD700",
+                marginBottom: "0.5rem",
+              }}
+            >
+              500+
+            </div>
+            <div style={{ fontSize: "1.1rem", opacity: 0.95 }}>
+              Projects Completed
+            </div>
+          </div>
+          <div>
+            <div
+              style={{
+                fontSize: "3rem",
+                fontWeight: "bold",
+                color: "#FFD700",
+                marginBottom: "0.5rem",
+              }}
+            >
+              1000+
+            </div>
+            <div style={{ fontSize: "1.1rem", opacity: 0.95 }}>
+              Satisfied Clients
+            </div>
+          </div>
+          <div>
+            <div
+              style={{
+                fontSize: "3rem",
+                fontWeight: "bold",
+                color: "#FFD700",
+                marginBottom: "0.5rem",
+              }}
+            >
+              100%
+            </div>
+            <div style={{ fontSize: "1.1rem", opacity: 0.95 }}>
+              Quality Guaranteed
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* WHY CHOOSE US SECTION */}
+      <section
+        style={{
+          padding: "4rem 1rem",
+          maxWidth: "1200px",
+          margin: "0 auto",
+        }}
+      >
+        <div style={{ textAlign: "center", marginBottom: "3rem" }}>
+          <h2
+            style={{
+              fontSize: "2.5rem",
+              marginBottom: "1rem",
+              fontWeight: "bold",
+              color: "#1E3A8A",
+            }}
+          >
+            Why Choose Gitau Concrete Works?
+          </h2>
+          <p
+            style={{
+              fontSize: "1.1rem",
+              color: "#6B7280",
+              maxWidth: "600px",
+              margin: "0 auto",
+              lineHeight: "1.6",
+            }}
+          >
+            We're committed to delivering excellence in every project
+          </p>
+        </div>
+
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+            gap: "2rem",
+          }}
+        >
+          {[
+            {
+              icon: "⭐",
+              title: "Premium Quality",
+              description: "Only the highest grade materials and expert craftsmanship",
+            },
+            {
+              icon: "⚡",
+              title: "Fast Completion",
+              description: "Efficient execution without compromising quality standards",
+            },
+            {
+              icon: "🛡️",
+              title: "Durability Guarantee",
+              description: "Long-lasting results backed by industry-leading warranties",
+            },
+            {
+              icon: "👥",
+              title: "Expert Team",
+              description: "Experienced professionals with decades of combined expertise",
+            },
+            {
+              icon: "💰",
+              title: "Competitive Pricing",
+              description: "Best value for money without hidden costs",
+            },
+            {
+              icon: "🎯",
+              title: "Customized Solutions",
+              description: "Tailored designs and specifications for your unique needs",
+            },
+          ].map((item, idx) => (
+            <div
+              key={idx}
+              style={{
+                padding: "2rem",
+                background: "#F9FAFB",
+                borderRadius: "0.75rem",
+                border: "1px solid #E5E7EB",
+                textAlign: "center",
+                transition: "all 0.3s ease",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.boxShadow = "0 10px 25px rgba(0, 0, 0, 0.1)";
+                e.currentTarget.style.transform = "translateY(-4px)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.boxShadow = "none";
+                e.currentTarget.style.transform = "translateY(0)";
+              }}
+            >
+              <div style={{ fontSize: "3rem", marginBottom: "1rem" }}>
+                {item.icon}
+              </div>
+              <h3
+                style={{
+                  fontSize: "1.2rem",
+                  fontWeight: "bold",
+                  color: "#1E3A8A",
+                  marginBottom: "0.5rem",
+                }}
+              >
+                {item.title}
+              </h3>
+              <p
+                style={{
+                  color: "#6B7280",
+                  fontSize: "0.95rem",
+                  lineHeight: "1.6",
+                  margin: 0,
+                }}
+              >
+                {item.description}
+              </p>
+            </div>
+          ))}
         </div>
       </section>
 

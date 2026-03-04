@@ -10,6 +10,10 @@ import { ServicesPage } from "./pages/ServicesPage";
 import { DesignsPage } from "./pages/DesignsPage";
 import { ProjectsGalleryPage } from "./pages/ProjectsGalleryPage";
 import { ContactPage } from "./pages/ContactPage";
+import { AboutPage } from "./pages/AboutPage";
+import { TestimonialsPage } from "./pages/TestimonialsPage";
+import { ResourcesPage } from "./pages/ResourcesPage";
+import { CareersPage } from "./pages/CareersPage";
 
 function App() {
   return (
@@ -36,6 +40,10 @@ function App() {
             <Route path="/services" element={<ServicesPage />} />
             <Route path="/designs" element={<DesignsPage />} />
             <Route path="/projects" element={<ProjectsGalleryPage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/testimonials" element={<TestimonialsPage />} />
+            <Route path="/resources" element={<ResourcesPage />} />
+            <Route path="/careers" element={<CareersPage />} />
             <Route path="/contact" element={<ContactPage />} />
 
             {/* Fallback */}
