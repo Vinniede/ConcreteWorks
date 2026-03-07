@@ -6,9 +6,19 @@ export interface ProductType {
   category: 'cabro' | 'cobblestone' | 'kerbstone';
   description: string;
   image: string;
+  gallery?: string[];
+  colorOptions?: ProductColorOption[];
   thickness?: string[];
   useCases: string[];
   features: string[];
+}
+
+export interface ProductColorOption {
+  id: string;
+  name: string;
+  hex: string;
+  useCase: string;
+  type: 'solid' | 'blend';
 }
 
 export interface ProductCategory {
@@ -223,12 +233,84 @@ export const allProducts: ProductType[] = [
   ...kerbStones
 ];
 
+const defaultProductColors: ProductColorOption[] = [
+  {
+    id: 'color-red',
+    name: 'Red',
+    hex: '#B91C1C',
+    useCase: 'Driveways, walkways',
+    type: 'solid'
+  },
+  {
+    id: 'color-charcoal',
+    name: 'Black / Charcoal',
+    hex: '#1F2937',
+    useCase: 'Modern designs',
+    type: 'solid'
+  },
+  {
+    id: 'color-grey',
+    name: 'Grey',
+    hex: '#6B7280',
+    useCase: 'Default concrete',
+    type: 'solid'
+  },
+  {
+    id: 'color-ochre',
+    name: 'Yellow / Ochre',
+    hex: '#CA8A04',
+    useCase: 'Decorative edges',
+    type: 'solid'
+  },
+  {
+    id: 'color-brown',
+    name: 'Brown',
+    hex: '#92400E',
+    useCase: 'Landscaping',
+    type: 'solid'
+  },
+  {
+    id: 'color-green',
+    name: 'Green',
+    hex: '#166534',
+    useCase: 'Garden / eco areas',
+    type: 'solid'
+  },
+  {
+    id: 'color-mix',
+    name: 'Mixed Colors',
+    hex: '#8B5E34',
+    useCase: 'Signature blended finish',
+    type: 'blend'
+  }
+];
+
+const enrichProducts = (products: ProductType[]): ProductType[] => {
+  return products.map((product) => {
+    const sameCategoryImages = products
+      .filter(
+        (candidate) =>
+          candidate.category === product.category && candidate.id !== product.id
+      )
+      .map((candidate) => candidate.image)
+      .slice(0, 2);
+
+    return {
+      ...product,
+      gallery: product.gallery ?? [product.image, ...sameCategoryImages],
+      colorOptions: product.colorOptions ?? defaultProductColors
+    };
+  });
+};
+
+const cmsReadyProducts = enrichProducts(allProducts);
+
 // Helper function to get products by category
 export const getProductsByCategory = (categoryKey: string): ProductType[] => {
-  return allProducts.filter(product => product.category === categoryKey);
+  return cmsReadyProducts.filter(product => product.category === categoryKey);
 };
 
 // Helper function to get single product
 export const getProductById = (id: string): ProductType | undefined => {
-  return allProducts.find(product => product.id === id);
+  return cmsReadyProducts.find(product => product.id === id);
 };

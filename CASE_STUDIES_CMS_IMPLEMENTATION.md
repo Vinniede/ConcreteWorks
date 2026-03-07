@@ -19,13 +19,48 @@ This includes updates such as:
 
 ## 2. Current system alignment (your existing stack)
 Existing codebase already supports this direction:
-- Frontend: React + Vite (`src/pages`, `src/components`, constants currently used as content source)
-- Backend: Express + TypeScript (`server/src/routes`, `server/src/services`)
-- Database: PostgreSQL (`server/src/db/connection.ts`)
+- Frontend: Next.js (public site + admin under `/admin`)
+- Backend: Next.js API Routes (serverless backend on Vercel)
+- Database: Neon PostgreSQL
 - Existing API pattern: `/api/products`, `/api/projects`, `/api/blog`, `/api/quotes`
 
 ### What must change
 Move content source from static constants files to database-backed APIs for all core modules.
+
+### 2.1 Public vs Admin access model (same deployment, separate surfaces)
+The project will be deployed as one app, but with two clear route spaces:
+
+- Public website (customers):
+  - `https://concreteworks.vercel.app/`
+  - `https://concreteworks.com/` (future)
+- Admin CMS (internal users only):
+  - `https://concreteworks.vercel.app/admin`
+  - `https://concreteworks.com/admin` (future)
+
+Critical rule:
+- Do not expose Admin/CMS links in public navbar, footer, hero CTAs, or public sitemap menus.
+- Admin is reachable only by direct URL and authentication.
+
+Architecture shape:
+
+```text
+Browser
+   |
+   v
+Vercel
+ |- Frontend (Next.js)
+ \- API Routes (serverless backend)
+   |
+   v
+Neon PostgreSQL
+```
+
+Routing implementation approach (single codebase):
+- Public routes: `/`, `/products`, `/services`, `/projects`, `/designs`, `/case-studies`, `/contact`, etc.
+- Admin routes: `/admin/*` only.
+- Admin route guard: unauthenticated users are redirected to `/admin/login`.
+- Public layout and admin layout are separate wrappers.
+- Use lazy loading for `/admin/*` bundle to keep public site fast.
 
 ---
 
@@ -94,17 +129,15 @@ Move content source from static constants files to database-backed APIs for all 
 
 ### Roles
 - `admin`: full control (users, settings, publishing override)
-- `editor`: create/edit content drafts across modules
-- `reviewer`: approve/reject, publish approved items
-- `media_manager`: upload/manage media library
-- `viewer`: read-only dashboard access
+- `media_manager`: create/edit drafts + manage media library
+- `editor`: create/edit content drafts (no media library management)
 
 ### Permission matrix (summary)
-- Create/edit draft: admin/editor
-- Upload media: admin/media_manager/editor
-- Submit for review: admin/editor
-- Approve/reject: admin/reviewer
-- Publish/unpublish: admin/reviewer
+- Create/edit draft: admin/media_manager/editor
+- Upload/manage media: admin/media_manager
+- Submit for review: admin/media_manager/editor
+- Approve/reject: admin only
+- Publish/unpublish: admin only
 - Manage users/roles: admin only
 - Change global settings: admin only
 
@@ -171,6 +204,12 @@ For products/services where price changes often:
 - Media upload: `/api/admin/media/upload`
 - Review queue: `/api/admin/review-queue`
 - Revisions/audit: `/api/admin/revisions/:entity`
+
+### Admin API hard boundary
+- Every `/api/admin/*` endpoint must enforce role middleware.
+- Public APIs (`/api/products`, `/api/projects`, etc.) return published content only.
+- Admin auth cookie/token should be scoped for admin usage and never required for public read routes.
+- API handlers run as serverless functions on Vercel.
 
 ---
 
@@ -260,24 +299,25 @@ For each block:
 
 ## 8. How different users access and update content
 
-## 8.1 Marketing editor flow (weekly updates)
+## 8.1 Editor flow (weekly updates)
 1. Login to CMS.
 2. Open module (e.g., Products or Home Blocks).
 3. Create/edit content as draft.
-4. Upload media from Media Library.
-5. Submit for review.
+4. Submit for review.
 
-## 8.2 Reviewer flow
-1. Open Review Queue.
-2. Compare draft vs current published version.
-3. Approve or reject with comment.
-4. Publish approved content (immediately or scheduled).
+## 8.2 Media manager flow
+1. Login to CMS.
+2. Upload/manage media in Media Library.
+3. Create/edit drafts and attach approved media.
+4. Submit for review.
 
 ## 8.3 Admin flow
 1. Manage roles/users.
-2. Maintain global settings.
-3. Audit logs and rollback if needed.
-4. Emergency unpublish/archive when required.
+2. Open Review Queue and compare draft vs currently published version.
+3. Approve/reject and publish/unpublish content.
+4. Maintain global settings.
+5. Audit logs and rollback if needed.
+6. Emergency unpublish/archive when required.
 
 ---
 
@@ -295,6 +335,8 @@ For each block:
 - JWT auth + refresh token rotation
 - Password hashing (`bcrypt`)
 - Role middleware for every admin endpoint
+- Route-level guard for `/admin/*` in frontend
+- Redirect public users from unknown admin states to `/admin/login`
 - Input validation (`zod`/`joi`)
 - Rate limiting + audit logging
 - File upload constraints (type, size, virus scan if available)
@@ -309,6 +351,8 @@ For each block:
 - Shared workflow fields and base tables
 - Media library service
 - Site settings API
+- Add route split: public routes + `/admin/*` route group with protected layout
+- Build `/admin/login` and auth bootstrap
 
 ## Phase 2: High-impact modules (2-3 weeks)
 - Products CMS (including pricing)
@@ -331,15 +375,21 @@ For each block:
 ## 12. Mapping to your current repository
 
 ### Frontend changes
-- Replace constant imports in pages with `apiClient` fetching
+- Replace constant imports in pages with fetches to Next.js API routes
 - Add module hooks:
   - `useProducts`, `useServices`, `useHomeBlocks`, `useCaseStudies`, etc.
 - Add `/admin` route group for CMS UI
+- Create separate layouts:
+  - `PublicLayout` (website pages)
+  - `AdminLayout` (CMS pages)
+- Ensure public navigation components never render Admin links
+- Add route protection component for `/admin/*`
 
 ### Backend changes
-- Add routes and services per module in `server/src/routes` and `server/src/services`
-- Add auth middleware and role checks
-- Add migration files for new CMS tables
+- Add Next.js API routes per module under `/api/*` and `/api/admin/*`
+- Add auth middleware/utilities and role checks for admin handlers
+- Add migration files for Neon PostgreSQL tables
+- Separate public and admin handlers to avoid accidental data exposure
 
 ### Existing modules to refactor first
 1. `src/constants/products.ts`
@@ -357,6 +407,8 @@ For each block:
 - Role-based permissions are enforced
 - Audit trail and rollback exist
 - Weekly updates can be completed end-to-end by non-developers
+- Public UI has no visible Admin/CMS entry point
+- `/admin` is fully functional for internal users via direct URL + auth
 
 ---
 
