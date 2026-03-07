@@ -7,7 +7,7 @@ interface ProductCardProps {
 
 export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   return (
-    <Link to={`/products/${product.id}`}>
+    <Link to={`/product/${product.id}`}>
       <div className="product-card">
         <div className="product-card-image">
           <img src={product.image} alt={product.name} />
@@ -23,9 +23,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               ))}
             </ul>
           </div>
-          <button className="view-details-btn">View Details →</button>
+          <button className="view-details-btn">View Details {"->"}</button>
         </div>
       </div>
     </Link>
   );
 };
+
+

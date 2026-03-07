@@ -22,9 +22,10 @@ export const HomePage: React.FC = () => {
   const projectShowcase = projects.slice(0, 4);
 
   return (
-    <div>
+    <div className="home-page">
       {/* HERO SECTION */}
       <section
+        className="home-hero"
         style={{
           position: "relative",
           color: "white",
@@ -85,7 +86,7 @@ export const HomePage: React.FC = () => {
                 fontSize: "clamp(1.5rem, 5vw, 3.5rem)",
                 marginBottom: "0.5rem",
                 fontWeight: "bold",
-                color: "#FBBF24",
+                color: "var(--color-highlight)",
                 textShadow: "2px 2px 8px rgba(0, 0, 0, 0.8)",
                 lineHeight: "1.1",
               }}
@@ -117,7 +118,7 @@ export const HomePage: React.FC = () => {
               style={{
                 fontSize: "clamp(0.85rem, 2vw, 1.05rem)",
                 marginBottom: "0",
-                color: "#E5E5E5",
+                color: "var(--gray-medium)",
                 textShadow: "1px 1px 3px rgba(0, 0, 0, 0.8)",
                 fontWeight: "300",
                 lineHeight: "1.4",
@@ -152,8 +153,8 @@ export const HomePage: React.FC = () => {
                 boxShadow: "0 4px 15px rgba(249, 115, 22, 0.4)",
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = "#fbbf24";
-                e.currentTarget.style.border = "2px solid #fbbf24";
+                e.currentTarget.style.background = "var(--color-highlight)";
+                e.currentTarget.style.border = "2px solid var(--color-highlight)";
                 e.currentTarget.style.transform = "translateY(-3px)";
                 e.currentTarget.style.boxShadow =
                   "0 6px 20px rgba(249, 115, 22, 0.6)";
@@ -173,18 +174,18 @@ export const HomePage: React.FC = () => {
               to="/contact"
               style={{
                 background: "transparent",
-                color: "#FBBF24",
+                color: "var(--color-highlight)",
                 padding: "clamp(0.75rem, 2vw, 1rem) clamp(1.5rem, 4vw, 2.5rem)",
                 textDecoration: "none",
                 borderRadius: "var(--radius-lg)",
                 fontWeight: "bold",
                 fontSize: "clamp(0.9rem, 2vw, 1rem)",
-                border: "2px solid #FBBF24",
+                border: "2px solid var(--color-highlight)",
                 cursor: "pointer",
                 transition: "all 0.3s ease",
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.background = "#FBBF24";
+                e.currentTarget.style.background = "var(--color-highlight)";
                 e.currentTarget.style.color = "white";
                 e.currentTarget.style.transform = "translateY(-3px)";
                 e.currentTarget.style.boxShadow =
@@ -192,7 +193,7 @@ export const HomePage: React.FC = () => {
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.background = "transparent";
-                e.currentTarget.style.color = "#FBBF24";
+                e.currentTarget.style.color = "var(--color-highlight)";
                 e.currentTarget.style.transform = "translateY(0)";
                 e.currentTarget.style.boxShadow = "none";
               }}
@@ -205,6 +206,7 @@ export const HomePage: React.FC = () => {
 
       {/* PRODUCT CATEGORIES */}
       <section
+        className="home-product-categories"
         style={{
           maxWidth: "1200px",
           margin: "0 auto",
@@ -224,6 +226,7 @@ export const HomePage: React.FC = () => {
         </h2>
 
         <div
+          className="home-product-categories-grid"
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
@@ -318,6 +321,7 @@ export const HomePage: React.FC = () => {
 
       {/* FEATURED PRODUCTS */}
       <section
+        className="home-featured-products"
         style={{
           background: "var(--primary-blue-lighter)",
           padding: "4rem 1rem",
@@ -337,6 +341,7 @@ export const HomePage: React.FC = () => {
           </h2>
 
           <div
+            className="home-featured-products-grid"
             style={{
               display: "grid",
               gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
@@ -434,6 +439,7 @@ export const HomePage: React.FC = () => {
 
       {/* CABRO DESIGN IDEAS */}
       <section
+        className="home-design-ideas"
         style={{
           maxWidth: "1200px",
           margin: "0 auto",
@@ -453,6 +459,7 @@ export const HomePage: React.FC = () => {
         </h2>
 
         <div
+          className="home-design-grid"
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
@@ -513,6 +520,7 @@ export const HomePage: React.FC = () => {
         </div>
 
         <div
+          className="home-design-actions"
           style={{
             textAlign: "center",
             display: "flex",
@@ -534,7 +542,7 @@ export const HomePage: React.FC = () => {
               transition: "all 0.3s ease",
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.background = "#EA580C";
+              e.currentTarget.style.background = "var(--color-action-primary-hover)";
               e.currentTarget.style.transform = "translateY(-2px)";
             }}
             onMouseLeave={(e) => {
@@ -557,7 +565,7 @@ export const HomePage: React.FC = () => {
               transition: "all 0.3s ease",
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.background = "#003D99";
+              e.currentTarget.style.background = "var(--primary-blue-light)";
               e.currentTarget.style.transform = "translateY(-2px)";
             }}
             onMouseLeave={(e) => {
@@ -572,6 +580,7 @@ export const HomePage: React.FC = () => {
 
       {/* PROJECT GALLERY */}
       <section
+        className="home-project-gallery"
         style={{
           background: "var(--primary-blue-lighter)",
           padding: "4rem 1rem",
@@ -591,6 +600,7 @@ export const HomePage: React.FC = () => {
           </h2>
 
           <div
+            className="home-project-grid"
             style={{
               display: "grid",
               gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
@@ -703,6 +713,7 @@ export const HomePage: React.FC = () => {
 
       {/* CABRO CALCULATOR MODAL */}
       <section
+        className="home-calculator-section"
         style={{
           maxWidth: "1200px",
           margin: "0 auto",
@@ -751,7 +762,7 @@ export const HomePage: React.FC = () => {
             boxShadow: "var(--shadow-lg)",
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.background = "#EA580C";
+            e.currentTarget.style.background = "var(--color-action-primary-hover)";
             e.currentTarget.style.transform = "translateY(-3px)";
             e.currentTarget.style.boxShadow = "var(--shadow-xl)";
           }}
@@ -767,6 +778,7 @@ export const HomePage: React.FC = () => {
 
       {/* WHY CHOOSE US */}
       <section
+        className="home-why-choose"
         style={{
           background: "var(--primary-blue-lighter)",
           padding: "4rem 1rem",
@@ -786,6 +798,7 @@ export const HomePage: React.FC = () => {
           </h2>
 
           <div
+            className="home-why-grid"
             style={{
               display: "grid",
               gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
@@ -852,28 +865,46 @@ export const HomePage: React.FC = () => {
 
       {/* TESTIMONIALS SECTION */}
       <section
+        className="home-testimonials"
         style={{
           padding: "4rem 1rem",
           maxWidth: "1200px",
           margin: "0 auto",
-          background: "#F9FAFB",
+          background:
+            "linear-gradient(180deg, rgba(239, 246, 255, 0.7) 0%, rgba(255, 255, 255, 1) 100%)",
+          borderRadius: "1rem",
+          border: "1px solid var(--primary-blue-lighter)",
         }}
       >
         <div style={{ textAlign: "center", marginBottom: "3rem" }}>
+          <div
+            style={{
+              display: "inline-block",
+              padding: "0.35rem 0.8rem",
+              borderRadius: "999px",
+              background: "var(--primary-blue-lighter)",
+              color: "var(--color-brand-strong)",
+              fontSize: "0.8rem",
+              fontWeight: 700,
+              marginBottom: "0.8rem",
+            }}
+          >
+            Testimonials
+          </div>
           <h2
             style={{
-              fontSize: "2.5rem",
-              marginBottom: "1rem",
+              fontSize: "clamp(1.7rem, 4vw, 2.4rem)",
+              marginBottom: "0.8rem",
               fontWeight: "bold",
-              color: "#1E3A8A",
+              color: "var(--color-brand-strong)",
             }}
           >
             What Our Clients Say
           </h2>
           <p
             style={{
-              fontSize: "1.1rem",
-              color: "#6B7280",
+              fontSize: "1rem",
+              color: "var(--color-text-muted)",
               maxWidth: "600px",
               margin: "0 auto",
               lineHeight: "1.6",
@@ -883,44 +914,67 @@ export const HomePage: React.FC = () => {
           </p>
         </div>
 
-        <div className="grid-3" style={{ gap: "2rem", marginBottom: "2rem" }}>
+        <div
+          className="home-testimonials-grid"
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            gap: "1.5rem",
+            marginBottom: "2rem",
+            justifyContent: "center",
+          }}
+        >
           {testimonials.slice(0, 3).map((testimonial) => (
-            <TestimonialCard key={testimonial.id} testimonial={testimonial} />
+            <div key={testimonial.id} style={{ flex: "1 1 300px", maxWidth: "360px" }}>
+              <TestimonialCard testimonial={testimonial} />
+            </div>
           ))}
         </div>
 
         <div style={{ textAlign: "center" }}>
           <Link
-            to="/testimonials"
+            to="/case-studies"
             style={{
-              color: "var(--primary-blue)",
               textDecoration: "none",
-              fontWeight: "bold",
-              fontSize: "1.05rem",
-              display: "inline-block",
-              gap: "0.5rem",
+              fontWeight: 700,
+              fontSize: "0.98rem",
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: "0.75rem 1.4rem",
+              borderRadius: "0.65rem",
+              border: "1px solid var(--color-brand-strong)",
+              background: "var(--color-brand-strong)",
+              color: "var(--text-light)",
+              transition: "all 0.25s ease",
             }}
             onMouseEnter={(e) => {
-              e.currentTarget.style.color = "var(--accent-orange)";
+              e.currentTarget.style.background = "var(--primary-blue-light)";
+              e.currentTarget.style.borderColor = "var(--primary-blue-light)";
+              e.currentTarget.style.transform = "translateY(-2px)";
             }}
             onMouseLeave={(e) => {
-              e.currentTarget.style.color = "var(--primary-blue)";
+              e.currentTarget.style.background = "var(--color-brand-strong)";
+              e.currentTarget.style.borderColor = "var(--color-brand-strong)";
+              e.currentTarget.style.transform = "translateY(0)";
             }}
           >
-            View All Testimonials →
+            View Case Studies
           </Link>
         </div>
       </section>
 
       {/* STATS SECTION */}
       <section
+        className="home-stats"
         style={{
-          background: "linear-gradient(135deg, var(--primary-blue), #0052A3)",
+          background: "linear-gradient(135deg, var(--primary-blue), var(--primary-blue))",
           color: "white",
           padding: "4rem 1rem",
         }}
       >
         <div
+          className="home-stats-grid"
           style={{
             maxWidth: "1200px",
             margin: "0 auto",
@@ -935,7 +989,7 @@ export const HomePage: React.FC = () => {
               style={{
                 fontSize: "3rem",
                 fontWeight: "bold",
-                color: "#FFD700",
+                color: "var(--color-highlight)",
                 marginBottom: "0.5rem",
               }}
             >
@@ -950,7 +1004,7 @@ export const HomePage: React.FC = () => {
               style={{
                 fontSize: "3rem",
                 fontWeight: "bold",
-                color: "#FFD700",
+                color: "var(--color-highlight)",
                 marginBottom: "0.5rem",
               }}
             >
@@ -965,7 +1019,7 @@ export const HomePage: React.FC = () => {
               style={{
                 fontSize: "3rem",
                 fontWeight: "bold",
-                color: "#FFD700",
+                color: "var(--color-highlight)",
                 marginBottom: "0.5rem",
               }}
             >
@@ -980,7 +1034,7 @@ export const HomePage: React.FC = () => {
               style={{
                 fontSize: "3rem",
                 fontWeight: "bold",
-                color: "#FFD700",
+                color: "var(--color-highlight)",
                 marginBottom: "0.5rem",
               }}
             >
@@ -995,6 +1049,7 @@ export const HomePage: React.FC = () => {
 
       {/* WHY CHOOSE US SECTION */}
       <section
+        className="home-why-choose-alt"
         style={{
           padding: "4rem 1rem",
           maxWidth: "1200px",
@@ -1007,7 +1062,7 @@ export const HomePage: React.FC = () => {
               fontSize: "2.5rem",
               marginBottom: "1rem",
               fontWeight: "bold",
-              color: "#1E3A8A",
+              color: "var(--color-brand-strong)",
             }}
           >
             Why Choose Gitau Concrete Works?
@@ -1015,7 +1070,7 @@ export const HomePage: React.FC = () => {
           <p
             style={{
               fontSize: "1.1rem",
-              color: "#6B7280",
+              color: "var(--color-text-muted)",
               maxWidth: "600px",
               margin: "0 auto",
               lineHeight: "1.6",
@@ -1026,6 +1081,7 @@ export const HomePage: React.FC = () => {
         </div>
 
         <div
+          className="home-why-alt-grid"
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
@@ -1068,9 +1124,9 @@ export const HomePage: React.FC = () => {
               key={idx}
               style={{
                 padding: "2rem",
-                background: "#F9FAFB",
+                background: "var(--color-surface-muted)",
                 borderRadius: "0.75rem",
-                border: "1px solid #E5E7EB",
+                border: "1px solid var(--color-border)",
                 textAlign: "center",
                 transition: "all 0.3s ease",
               }}
@@ -1090,7 +1146,7 @@ export const HomePage: React.FC = () => {
                 style={{
                   fontSize: "1.2rem",
                   fontWeight: "bold",
-                  color: "#1E3A8A",
+                  color: "var(--color-brand-strong)",
                   marginBottom: "0.5rem",
                 }}
               >
@@ -1098,7 +1154,7 @@ export const HomePage: React.FC = () => {
               </h3>
               <p
                 style={{
-                  color: "#6B7280",
+                  color: "var(--color-text-muted)",
                   fontSize: "0.95rem",
                   lineHeight: "1.6",
                   margin: 0,
@@ -1113,10 +1169,10 @@ export const HomePage: React.FC = () => {
 
       {/* CALL TO ACTION */}
       <section
+        className="home-final-cta"
         style={{
-          background:
-            "linear-gradient(135deg, var(--primary-blue), var(--primary-blue-light))",
-          color: "white",
+          background: "var(--pre-footer-bg)",
+          color: "var(--text-primary)",
           padding: "4rem 1rem",
           textAlign: "center",
         }}
@@ -1154,7 +1210,7 @@ export const HomePage: React.FC = () => {
             transition: "all 0.3s ease",
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.background = "#B91C1C";
+            e.currentTarget.style.background = "var(--color-danger)";
             e.currentTarget.style.transform = "translateY(-2px)";
           }}
           onMouseLeave={(e) => {
@@ -1165,6 +1221,132 @@ export const HomePage: React.FC = () => {
           Request Quote Now
         </Link>
       </section>
+
+      <style>{`
+        .home-page section {
+          width: 100%;
+        }
+
+        .home-product-categories-grid,
+        .home-featured-products-grid,
+        .home-design-grid,
+        .home-project-grid,
+        .home-why-grid,
+        .home-stats-grid,
+        .home-why-alt-grid {
+          display: grid !important;
+        }
+
+        .home-design-actions,
+        .home-testimonials-grid {
+          display: flex !important;
+          flex-direction: row !important;
+        }
+
+        .home-page h2 {
+          line-height: 1.2;
+        }
+
+        @media (max-width: 1024px) {
+          .home-hero {
+            min-height: 400px !important;
+            padding: 2.2rem 1rem !important;
+          }
+
+          .home-page section {
+            padding-left: 0.9rem !important;
+            padding-right: 0.9rem !important;
+          }
+
+          .home-product-categories-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+          }
+
+          .home-featured-products-grid,
+          .home-design-grid,
+          .home-project-grid,
+          .home-why-grid,
+          .home-why-alt-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+            gap: 1.25rem !important;
+          }
+
+          .home-stats-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+            gap: 1.2rem !important;
+          }
+        }
+
+        @media (max-width: 767px) {
+          .home-hero {
+            min-height: 350px !important;
+            padding: 2rem 0.85rem !important;
+          }
+
+          .home-page section {
+            padding-top: 2.3rem !important;
+            padding-bottom: 2.3rem !important;
+            padding-left: 0.75rem !important;
+            padding-right: 0.75rem !important;
+          }
+
+          .home-product-categories-grid,
+          .home-featured-products-grid,
+          .home-design-grid,
+          .home-project-grid,
+          .home-why-grid,
+          .home-stats-grid,
+          .home-why-alt-grid {
+            grid-template-columns: 1fr !important;
+            gap: 1rem !important;
+          }
+
+          .home-design-actions {
+            flex-direction: column !important;
+            align-items: stretch !important;
+          }
+
+          .home-design-actions a,
+          .home-design-actions button {
+            width: 100% !important;
+            text-align: center !important;
+          }
+
+          .home-testimonials-grid > div {
+            max-width: 100% !important;
+            flex-basis: 100% !important;
+          }
+
+          .home-stats h2,
+          .home-why-choose h2,
+          .home-why-choose-alt h2,
+          .home-final-cta h2,
+          .home-calculator-section h2 {
+            font-size: 1.55rem !important;
+          }
+        }
+
+        @media (max-width: 479px) {
+          .home-hero {
+            min-height: 320px !important;
+          }
+
+          .home-page section p {
+            line-height: 1.4 !important;
+          }
+
+          .home-product-categories-grid > a div[style*="height: 200px"],
+          .home-featured-products-grid img,
+          .home-design-grid img,
+          .home-project-grid img {
+            height: 180px !important;
+          }
+
+          .home-stats-grid div[style*="fontSize: \"3rem\""] {
+            font-size: 2.1rem !important;
+          }
+        }
+      `}</style>
 
       {/* Modal Components */}
       <CalculatorModal
@@ -1178,3 +1360,8 @@ export const HomePage: React.FC = () => {
     </div>
   );
 };
+
+
+
+
+

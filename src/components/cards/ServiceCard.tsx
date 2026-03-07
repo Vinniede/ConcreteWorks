@@ -1,10 +1,13 @@
 import { Service } from "../../constants/services";
+import { useNavigate } from "react-router-dom";
 
 interface ServiceCardProps {
   service: Service;
 }
 
 export const ServiceCard: React.FC<ServiceCardProps> = ({ service }) => {
+  const navigate = useNavigate();
+
   return (
     <div className="service-card">
       <div className="service-card-image">
@@ -26,12 +29,16 @@ export const ServiceCard: React.FC<ServiceCardProps> = ({ service }) => {
         {service.areas && (
           <div className="service-areas">
             <strong>Suitable For:</strong>
-            <p>{service.areas.join(" • ")}</p>
+            <p>{service.areas.join(" � ")}</p>
           </div>
         )}
 
-        <button className="inquiry-btn">Request Service →</button>
+        <button className="inquiry-btn" onClick={() => navigate("/contact")}>
+          Request Service {"->"}
+        </button>
       </div>
     </div>
   );
 };
+
+

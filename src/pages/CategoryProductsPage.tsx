@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   productCategories,
   getProductsByCategory,
@@ -8,6 +8,7 @@ import { ProductCard } from "../components/cards/ProductCard";
 
 export const CategoryProductsPage: React.FC = () => {
   const { categoryKey } = useParams<{ categoryKey: string }>();
+  const navigate = useNavigate();
 
   const category = productCategories.find(
     (cat) => cat.categoryKey === categoryKey,
@@ -130,6 +131,7 @@ export const CategoryProductsPage: React.FC = () => {
         </p>
         <button
           className="cta-button"
+          onClick={() => navigate("/contact")}
           style={{
             marginTop: "1.5rem",
             alignSelf: "center",
@@ -142,3 +144,5 @@ export const CategoryProductsPage: React.FC = () => {
     </div>
   );
 };
+
+

@@ -1,626 +1,543 @@
+import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { useState } from "react";
 import { productCategories } from "../../constants/products";
 
-// Gradient animation style
-const gradientAnimationStyle = `
-  @keyframes gradientShift {
-    0% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-    100% {
-      background-position: 0% 50%;
-    }
-  }
+const desktopLinks = [
+  { label: "Home", path: "/" },
+  { label: "About Us", path: "/about" },
+  { label: "Services", path: "/services" },
+  { label: "Projects", path: "/projects" },
+  { label: "Designs", path: "/designs" },
+  { label: "Case Studies", path: "/case-studies" },
+];
 
-  .gradient-text {
-    background: linear-gradient(90deg, #FF6B6B, #FFA500, #FFD700, #FF6B6B);
-    background-size: 200% 200%;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    animation: gradientShift 4s ease infinite;
-  }
-`;
-
-// Add style tag to document
-if (
-  typeof document !== "undefined" &&
-  !document.getElementById("gradient-animation")
-) {
-  const styleTag = document.createElement("style");
-  styleTag.id = "gradient-animation";
-  styleTag.textContent = gradientAnimationStyle;
-  document.head.appendChild(styleTag);
-}
-
-export const Navbar: React.FC = () => {
-  const [showDropdown, setShowDropdown] = useState(false);
+export const Navbar = () => {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const [showProductsMenu, setShowProductsMenu] = useState(false);
+  const [showMobileProductsMenu, setShowMobileProductsMenu] = useState(false);
   const location = useLocation();
+  const productsMenuRef = useRef<HTMLDivElement | null>(null);
 
-  // Helper to determine if link is active
-  const isActive = (path: string) => location.pathname === path;
+  useEffect(() => {
+    setShowMobileMenu(false);
+    setShowProductsMenu(false);
+    setShowMobileProductsMenu(false);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    const onResize = () => {
+      if (window.innerWidth >= 768) {
+        setShowMobileMenu(false);
+      }
+    };
+
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+  useEffect(() => {
+    const onMouseDown = (event: MouseEvent) => {
+      if (!productsMenuRef.current) {
+        return;
+      }
+
+      if (!productsMenuRef.current.contains(event.target as Node)) {
+        setShowProductsMenu(false);
+      }
+    };
+
+    document.addEventListener("mousedown", onMouseDown);
+    return () => document.removeEventListener("mousedown", onMouseDown);
+  }, []);
+
+  const isActive = (path: string) =>
+    path === "/" ? location.pathname === "/" : location.pathname.startsWith(path);
+
   const isProductsActive =
-    location.pathname.startsWith("/products") ||
-    location.pathname.startsWith("/category");
+    location.pathname.startsWith("/products") || location.pathname.startsWith("/category/");
 
-  // Get active link style
-  const getNavLinkStyle = (isCurrentPage: boolean) => ({
-    color: isCurrentPage ? "#FFD700" : "white",
-    textDecoration: "none",
-    fontWeight: "600",
-    transition: "color 0.3s ease",
-    paddingBottom: "0.5rem",
-    borderBottom: isCurrentPage ? "2px solid #FFD700" : "2px solid transparent",
-  });
+  const closeMobileMenu = () => setShowMobileMenu(false);
 
   return (
-    <nav
-      style={{
-        background: "#1E3A8A",
-        boxShadow: "0 2px 8px rgba(0, 0, 0, 0.15)",
-        position: "sticky",
-        top: 0,
-        zIndex: 100,
-      }}
-    >
-      <div
-        style={{
-          width: "100%",
-          padding: "clamp(0.5rem, 2vw, 0.75rem) clamp(0.5rem, 3vw, 1rem)",
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          gap: "clamp(0.3rem, 1vw, 1rem)",
-          minHeight: "0",
-          flexWrap: "nowrap",
-          overflow: "visible",
-        }}
-      >
-        {/* LEFT: Logo + Company Name */}
-        <Link
-          to="/"
-          style={{
-            fontSize: "clamp(0.9rem, 2.5vw, 1.3rem)",
-            fontWeight: "bold",
-            textDecoration: "none",
-            display: "flex",
-            alignItems: "center",
-            gap: "clamp(0.2rem, 1.5vw, 0.5rem)",
-            flex: "0 0 auto",
-            whiteSpace: "nowrap",
-            minWidth: "0",
-          }}
-        >
-          <span
-            style={{ fontSize: "clamp(1rem, 2.5vw, 1.6rem)", flexShrink: 0 }}
-          >
-            🏗️
-          </span>
-          <span
-            className="gradient-text company-name"
-            style={{
-              fontWeight: "bold",
-              fontSize: "clamp(0.75rem, 2vw, 1.1rem)",
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-              whiteSpace: "nowrap",
-            }}
-          >
-            Gitau Concrete Works
-          </span>
+    <>
+      <nav className="site-navbar">
+        <Link to="/" className="site-navbar__brand" aria-label="Gitau Concrete Works home">
+          <span className="site-navbar__badge">GCW</span>
+          <span className="site-navbar__name">Gitau Concrete Works</span>
         </Link>
 
-        {/* CENTER + RIGHT: Desktop Nav + Hamburger */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "clamp(0.3rem, 1vw, 1rem)",
-            marginLeft: "auto",
-            flexShrink: 0,
-            whiteSpace: "nowrap",
-          }}
-        >
-          {/* Hamburger Button - Mobile Only */}
-          <button
-            onClick={() => setShowMobileMenu(!showMobileMenu)}
-            className="hamburger-btn"
-            style={{
-              background: "none",
-              border: "none",
-              color: "white",
-              fontSize: "clamp(1.2rem, 4vw, 1.5rem)",
-              cursor: "pointer",
-              padding: "clamp(0.3rem, 1vw, 0.5rem)",
-              zIndex: 101,
-              flexShrink: 0,
-              display: "none",
-              lineHeight: "1",
-              minWidth: "auto",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.color = "#FFD700";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.color = "white";
-            }}
+        <div className="site-navbar__desktop-links">
+          <Link
+            to="/"
+            className={`site-navbar__link ${isActive("/") ? "site-navbar__link--active" : ""}`}
           >
-            {showMobileMenu ? "✕" : "☰"}
-          </button>
-
-          {/* Desktop Navigation Links */}
-          <div
-            className="desktop-nav"
-            style={{
-              gap: "clamp(1rem, 2vw, 2rem)",
-              alignItems: "center",
-              justifyContent: "flex-end",
-              display: "flex",
-            }}
+            Home
+          </Link>
+          <Link
+            to="/about"
+            className={`site-navbar__link ${isActive("/about") ? "site-navbar__link--active" : ""}`}
           >
-            <Link
-              to="/"
-              style={getNavLinkStyle(isActive("/"))}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.color = "#FFD700";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.color = isActive("/")
-                  ? "#FFD700"
-                  : "white";
-              }}
-            >
-              Home
-            </Link>
+            About Us
+          </Link>
 
-            {/* Products with Dropdown */}
-            <div
-              style={{
-                position: "relative",
-                display: "flex",
-                alignItems: "center",
-              }}
-            >
-              <Link
-                to="/products"
-                style={getNavLinkStyle(isProductsActive)}
-                onMouseEnter={(e) => {
-                  setShowDropdown(true);
-                  e.currentTarget.style.color = "#FFD700";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.color = isProductsActive
-                    ? "#FFD700"
-                    : "white";
-                }}
-              >
-                Products
-              </Link>
-
-              <button
-                onMouseEnter={() => setShowDropdown(true)}
-                onMouseLeave={() => setShowDropdown(false)}
-                style={{
-                  background: "none",
-                  border: "none",
-                  fontWeight: "600",
-                  cursor: "pointer",
-                  fontSize: "0.8rem",
-                  padding: "0.5rem 0.5rem 0.5rem 0.25rem",
-                  color: isProductsActive ? "#FFD700" : "white",
-                  transition: "color 0.3s ease",
-                }}
-              >
-                ▼
-              </button>
-
-              {/* Dropdown Menu */}
-              {showDropdown && (
-                <div
-                  onMouseEnter={() => setShowDropdown(true)}
-                  onMouseLeave={() => setShowDropdown(false)}
-                  style={{
-                    position: "absolute",
-                    top: "100%",
-                    left: 0,
-                    background: "white",
-                    border: "1px solid #E5E7EB",
-                    borderRadius: "0.375rem",
-                    boxShadow: "0 10px 25px rgba(0, 0, 0, 0.1)",
-                    minWidth: "200px",
-                    marginTop: "0.5rem",
-                    zIndex: 1000,
-                  }}
-                >
-                  <Link
-                    to="/products"
-                    style={{
-                      display: "block",
-                      padding: "1rem",
-                      color: "#1F2937",
-                      textDecoration: "none",
-                      borderBottom: "1px solid #E5E7EB",
-                      fontWeight: "600",
-                      background: "white",
-                      transition: "all 0.3s ease",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.background = "#E0E7FF";
-                      e.currentTarget.style.color = "#1E3A8A";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.background = "white";
-                      e.currentTarget.style.color = "#1F2937";
-                    }}
-                  >
-                    All Products
-                  </Link>
-
-                  {productCategories.map((category) => (
-                    <Link
-                      key={category.id}
-                      to={`/category/${category.categoryKey}`}
-                      style={{
-                        display: "block",
-                        padding: "1rem",
-                        color: "#1F2937",
-                        textDecoration: "none",
-                        borderBottom: "1px solid #E5E7EB",
-                        background: "white",
-                        transition: "all 0.3s ease",
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.background = "#E0E7FF";
-                        e.currentTarget.style.color = "#1E3A8A";
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.background = "white";
-                        e.currentTarget.style.color = "#1F2937";
-                      }}
-                    >
-                      {category.icon} {category.name}
-                    </Link>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            <Link
-              to="/designs"
-              style={getNavLinkStyle(isActive("/designs"))}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.color = "#FFD700";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.color = isActive("/designs")
-                  ? "#FFD700"
-                  : "white";
-              }}
-            >
-              Designs
-            </Link>
-
-            <Link
-              to="/projects"
-              style={getNavLinkStyle(isActive("/projects"))}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.color = "#FFD700";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.color = isActive("/projects")
-                  ? "#FFD700"
-                  : "white";
-              }}
-            >
-              Projects
-            </Link>
-
-            <Link
-              to="/services"
-              style={getNavLinkStyle(isActive("/services"))}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.color = "#FFD700";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.color = isActive("/services")
-                  ? "#FFD700"
-                  : "white";
-              }}
-            >
-              Services
-            </Link>
-
-            <Link
-              to="/about"
-              style={getNavLinkStyle(isActive("/about"))}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.color = "#FFD700";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.color = isActive("/about")
-                  ? "#FFD700"
-                  : "white";
-              }}
-            >
-              About
-            </Link>
-
-            <Link
-              to="/resources"
-              style={getNavLinkStyle(isActive("/resources"))}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.color = "#FFD700";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.color = isActive("/resources")
-                  ? "#FFD700"
-                  : "white";
-              }}
-            >
-              Resources
-            </Link>
-
-            <Link
-              to="/contact"
-              style={{
-                background: isActive("/contact") ? "#FFB700" : "#FF9D00",
-                color: "white",
-                padding: "0.75rem 1.5rem",
-                borderRadius: "0.375rem",
-                textDecoration: "none",
-                fontWeight: "600",
-                transition: "background 0.3s ease",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = "#FFB700";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = isActive("/contact")
-                  ? "#FFB700"
-                  : "#FF9D00";
-              }}
-            >
-              Contact
-            </Link>
-          </div>
-        </div>
-      </div>
-
-      {/* Mobile Menu - Slide-out Panel */}
-      {showMobileMenu && (
-        <>
-          {/* Backdrop overlay - close menu when clicked */}
           <div
-            onClick={() => setShowMobileMenu(false)}
-            style={{
-              position: "fixed",
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              background: "rgba(0, 0, 0, 0.5)",
-              zIndex: 99,
-              animation: "fadeIn 0.3s ease",
-            }}
-          />
-
-          {/* Menu Panel */}
-          <div
-            style={{
-              position: "fixed",
-              top: 0,
-              right: 0,
-              height: "100vh",
-              width: "min(80vw, 300px)",
-              background: "#1E3A8A",
-              borderLeft: "2px solid #FFD700",
-              display: "flex",
-              flexDirection: "column",
-              overflowY: "auto",
-              zIndex: 100,
-              animation: "slideIn 0.3s ease",
-              paddingTop: "60px",
-            }}
+            ref={productsMenuRef}
+            className="site-navbar__products"
+            onMouseEnter={() => setShowProductsMenu(true)}
+            onMouseLeave={() => setShowProductsMenu(false)}
           >
-            <Link
-              to="/"
-              onClick={() => setShowMobileMenu(false)}
-              style={{
-                padding: "1rem",
-                color: isActive("/") ? "#FFD700" : "white",
-                textDecoration: "none",
-                fontWeight: "600",
-                borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
-                background: isActive("/")
-                  ? "rgba(255, 215, 0, 0.1)"
-                  : "transparent",
-              }}
-            >
-              Home
-            </Link>
-
             <Link
               to="/products"
-              onClick={() => setShowMobileMenu(false)}
-              style={{
-                padding: "1rem",
-                color: isProductsActive ? "#FFD700" : "white",
-                textDecoration: "none",
-                fontWeight: "600",
-                borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
-                background: isProductsActive
-                  ? "rgba(255, 215, 0, 0.1)"
-                  : "transparent",
-              }}
+              className={`site-navbar__link ${isProductsActive ? "site-navbar__link--active" : ""}`}
+              onClick={() => setShowProductsMenu(false)}
             >
-              All Products
+              Products
             </Link>
 
-            {productCategories.map((category) => (
-              <Link
-                key={category.id}
-                to={`/category/${category.categoryKey}`}
-                onClick={() => setShowMobileMenu(false)}
-                style={{
-                  padding: "0.75rem 1rem 0.75rem 2rem",
-                  color: "white",
-                  textDecoration: "none",
-                  fontWeight: "500",
-                  borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
-                  fontSize: "0.9rem",
-                }}
-              >
-                {category.icon} {category.name}
-              </Link>
-            ))}
-
-            <Link
-              to="/designs"
-              onClick={() => setShowMobileMenu(false)}
-              style={{
-                padding: "1rem",
-                color: isActive("/designs") ? "#FFD700" : "white",
-                textDecoration: "none",
-                fontWeight: "600",
-                borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
-                background: isActive("/designs")
-                  ? "rgba(255, 215, 0, 0.1)"
-                  : "transparent",
-              }}
-            >
-              Designs
-            </Link>
-
-            <Link
-              to="/projects"
-              onClick={() => setShowMobileMenu(false)}
-              style={{
-                padding: "1rem",
-                color: isActive("/projects") ? "#FFD700" : "white",
-                textDecoration: "none",
-                fontWeight: "600",
-                borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
-                background: isActive("/projects")
-                  ? "rgba(255, 215, 0, 0.1)"
-                  : "transparent",
-              }}
-            >
-              Projects
-            </Link>
-
-            <Link
-              to="/services"
-              onClick={() => setShowMobileMenu(false)}
-              style={{
-                padding: "1rem",
-                color: isActive("/services") ? "#FFD700" : "white",
-                textDecoration: "none",
-                fontWeight: "600",
-                borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
-                background: isActive("/services")
-                  ? "rgba(255, 215, 0, 0.1)"
-                  : "transparent",
-              }}
-            >
-              Services
-            </Link>
-
-            <Link
-              to="/about"
-              onClick={() => setShowMobileMenu(false)}
-              style={{
-                padding: "1rem",
-                color: isActive("/about") ? "#FFD700" : "white",
-                textDecoration: "none",
-                fontWeight: "600",
-                borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
-                background: isActive("/about")
-                  ? "rgba(255, 215, 0, 0.1)"
-                  : "transparent",
-              }}
-            >
-              About
-            </Link>
-
-            <Link
-              to="/resources"
-              onClick={() => setShowMobileMenu(false)}
-              style={{
-                padding: "1rem",
-                color: isActive("/resources") ? "#FFD700" : "white",
-                textDecoration: "none",
-                fontWeight: "600",
-                borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
-                background: isActive("/resources")
-                  ? "rgba(255, 215, 0, 0.1)"
-                  : "transparent",
-              }}
-            >
-              Resources
-            </Link>
-
-            <Link
-              to="/contact"
-              onClick={() => setShowMobileMenu(false)}
-              style={{
-                padding: "1rem",
-                background: "#FF9D00",
-                color: "white",
-                textDecoration: "none",
-                fontWeight: "600",
-                borderTop: "1px solid rgba(255, 255, 255, 0.1)",
-                margin: "0.5rem",
-              }}
-            >
-              Contact
-            </Link>
+            {showProductsMenu && (
+              <div className="site-navbar__products-menu">
+                <Link to="/products" className="site-navbar__products-item">
+                  All Products
+                </Link>
+                {productCategories.map((category) => (
+                  <Link
+                    key={category.id}
+                    to={`/category/${category.categoryKey}`}
+                    className="site-navbar__products-item"
+                  >
+                    {category.name}
+                  </Link>
+                ))}
+              </div>
+            )}
           </div>
-        </>
+
+          {desktopLinks.slice(2).map((item) => (
+            <Link
+              key={item.path}
+              to={item.path}
+              className={`site-navbar__link ${isActive(item.path) ? "site-navbar__link--active" : ""}`}
+            >
+              {item.label}
+            </Link>
+          ))}
+        </div>
+
+        <div className="site-navbar__actions">
+          <Link to="/contact" className={`site-navbar__cta ${isActive("/contact") ? "site-navbar__cta--active" : ""}`}>
+            Contact
+          </Link>
+
+          <button
+            type="button"
+            className="site-navbar__hamburger"
+            aria-label={showMobileMenu ? "Close menu" : "Open menu"}
+            aria-expanded={showMobileMenu}
+            aria-controls="mobile-navigation-panel"
+            onClick={() => setShowMobileMenu((prev) => !prev)}
+          >
+            {showMobileMenu ? "X" : "Menu"}
+          </button>
+        </div>
+      </nav>
+
+      {showMobileMenu && (
+        <div id="mobile-navigation-panel" className="site-navbar__mobile-panel" role="dialog" aria-modal="false">
+          <Link
+            to="/"
+            onClick={closeMobileMenu}
+            className={`site-navbar__mobile-link ${isActive("/") ? "site-navbar__mobile-link--active" : ""}`}
+          >
+            Home
+          </Link>
+          <Link
+            to="/about"
+            onClick={closeMobileMenu}
+            className={`site-navbar__mobile-link ${isActive("/about") ? "site-navbar__mobile-link--active" : ""}`}
+          >
+            About Us
+          </Link>
+          <div
+            className="site-navbar__mobile-submenu-wrap"
+            onMouseEnter={() => setShowMobileProductsMenu(true)}
+            onMouseLeave={() => setShowMobileProductsMenu(false)}
+          >
+            <button
+              type="button"
+              onClick={() => setShowMobileProductsMenu((prev) => !prev)}
+              className={`site-navbar__mobile-link site-navbar__mobile-toggle ${(showMobileProductsMenu || isProductsActive) ? "site-navbar__mobile-link--active" : ""}`}
+              aria-expanded={showMobileProductsMenu}
+              aria-controls="mobile-products-submenu"
+            >
+              Products
+            </button>
+            <div
+              id="mobile-products-submenu"
+              className={`site-navbar__mobile-submenu ${showMobileProductsMenu ? "site-navbar__mobile-submenu--open" : ""}`}
+            >
+              <Link to="/products" onClick={closeMobileMenu} className="site-navbar__mobile-sublink">
+                All Products
+              </Link>
+              {productCategories.map((category) => (
+                <Link
+                  key={category.id}
+                  to={`/category/${category.categoryKey}`}
+                  onClick={closeMobileMenu}
+                  className="site-navbar__mobile-sublink"
+                >
+                  {category.name}
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          {desktopLinks.slice(2).map((item) => (
+            <Link
+              key={item.path}
+              to={item.path}
+              onClick={closeMobileMenu}
+              className={`site-navbar__mobile-link ${isActive(item.path) ? "site-navbar__mobile-link--active" : ""}`}
+            >
+              {item.label}
+            </Link>
+          ))}
+
+          <Link
+            to="/contact"
+            onClick={closeMobileMenu}
+            className={`site-navbar__mobile-link ${isActive("/contact") ? "site-navbar__mobile-link--active" : ""}`}
+          >
+            Contact
+          </Link>
+        </div>
       )}
 
-      {/* CSS for Responsive */}
       <style>{`
-        @keyframes slideIn {
-          from {
-            transform: translateX(100%);
+        .site-navbar {
+          position: sticky;
+          top: 0;
+          z-index: 200;
+          width: 100%;
+          box-sizing: border-box;
+          display: flex !important;
+          flex-direction: row !important;
+          align-items: center !important;
+          justify-content: space-between !important;
+          gap: 1rem;
+          padding: 0.75rem 1rem !important;
+          background: var(--gradient-brand);
+          border-bottom: 2px solid rgba(250, 204, 21, 0.25);
+          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .site-navbar__brand {
+          min-width: 0;
+          display: flex;
+          align-items: center;
+          gap: 0.55rem;
+          text-decoration: none;
+        }
+
+        .site-navbar__badge {
+          background: linear-gradient(
+            135deg,
+            var(--color-highlight) 0%,
+            var(--color-action-primary) 100%
+          );
+          color: var(--gray-dark);
+          font-weight: 800;
+          font-size: 0.68rem;
+          letter-spacing: 0.04em;
+          border-radius: 50%;
+          width: 34px;
+          height: 34px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          padding: 0;
+          flex-shrink: 0;
+        }
+
+        .site-navbar__name {
+          color: var(--text-light);
+          font-size: clamp(0.92rem, 1.35vw, 1.08rem);
+          font-weight: 700;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
+        }
+
+        .site-navbar__desktop-links {
+          display: none;
+          align-items: center;
+          gap: 1.1rem;
+          margin: 0 0 0 auto;
+          padding: 0 1rem;
+          min-width: 0;
+        }
+
+        .site-navbar__link {
+          color: rgba(255, 255, 255, 0.9);
+          text-decoration: none;
+          font-size: 0.92rem;
+          font-weight: 600;
+          line-height: 1;
+          padding: 0.4rem 0.1rem;
+          border-bottom: 2px solid transparent;
+        }
+
+        .site-navbar__link:hover,
+        .site-navbar__link--active {
+          color: var(--color-highlight);
+          border-bottom-color: var(--color-highlight);
+        }
+
+        .site-navbar__products {
+          position: relative;
+        }
+
+        .site-navbar__products-menu {
+          position: absolute;
+          top: calc(100% + 0.5rem);
+          left: 0;
+          min-width: 230px;
+          display: flex;
+          flex-direction: column;
+          border-radius: 10px;
+          background: var(--color-surface);
+          border: 1px solid var(--color-border);
+          box-shadow: 0 14px 30px rgba(0, 0, 0, 0.16);
+          overflow: hidden;
+          z-index: 240;
+        }
+
+        .site-navbar__products-item {
+          padding: 0.72rem 0.9rem;
+          color: var(--color-text);
+          text-decoration: none;
+          font-size: 0.9rem;
+          font-weight: 600;
+          border-bottom: 1px solid #f0f2f5;
+        }
+
+        .site-navbar__products-item:last-child {
+          border-bottom: none;
+        }
+
+        .site-navbar__products-item:hover {
+          background: var(--color-highlight-soft);
+          color: var(--color-brand-strong);
+        }
+
+        .site-navbar__actions {
+          display: flex;
+          align-items: center;
+          gap: 0.65rem;
+          margin-left: auto;
+        }
+
+        .site-navbar__cta {
+          display: none;
+          background: var(--gradient-action);
+          color: var(--text-light);
+          text-decoration: none;
+          font-weight: 700;
+          font-size: 0.88rem;
+          border-radius: 999px;
+          padding: 0.58rem 1.1rem;
+          line-height: 1;
+          box-shadow: 0 4px 12px rgba(249, 115, 22, 0.28);
+          border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .site-navbar__cta:hover,
+        .site-navbar__cta--active {
+          color: var(--text-light);
+          transform: translateY(-1px);
+        }
+
+        .site-navbar__hamburger {
+          border: 1px solid rgba(250, 204, 21, 0.45);
+          background: rgba(250, 204, 21, 0.12);
+          color: var(--color-highlight);
+          padding: 0.42rem 0.72rem;
+          border-radius: 8px;
+          font-size: 0.85rem;
+          font-weight: 700;
+          line-height: 1.1;
+          min-height: 38px;
+        }
+
+        .site-navbar__mobile-panel {
+          position: fixed;
+          top: 4.2rem;
+          right: 0.75rem;
+          width: 240px;
+          min-width: 240px;
+          max-width: 240px;
+          height: auto;
+          max-height: 360px;
+          overflow-y: auto;
+          overflow-x: hidden;
+          display: flex;
+          flex-direction: column;
+          background: var(--gradient-brand);
+          border: 1px solid rgba(250, 204, 21, 0.32);
+          border-radius: 12px;
+          box-shadow: 0 16px 34px rgba(0, 0, 0, 0.35);
+          z-index: 240;
+          padding: 0.3rem;
+        }
+
+        .site-navbar__mobile-link {
+          text-decoration: none;
+          color: rgba(255, 255, 255, 0.94);
+          font-weight: 600;
+          padding: 0.5rem 0.62rem;
+          border-bottom: 1px solid rgba(250, 204, 21, 0.14);
+          white-space: nowrap;
+          border-radius: 8px;
+        }
+
+        .site-navbar__mobile-toggle {
+          width: 100%;
+          text-align: left;
+          border: none;
+          background: transparent;
+          cursor: pointer;
+        }
+
+        .site-navbar__mobile-submenu-wrap {
+          display: block;
+        }
+
+        .site-navbar__mobile-submenu {
+          display: none;
+          border-bottom: 1px solid rgba(250, 204, 21, 0.14);
+          background: rgba(15, 23, 42, 0.32);
+          border-radius: 8px;
+          margin: 0.1rem 0;
+        }
+
+        .site-navbar__mobile-submenu-wrap:hover .site-navbar__mobile-submenu,
+        .site-navbar__mobile-submenu-wrap:focus-within .site-navbar__mobile-submenu,
+        .site-navbar__mobile-submenu--open {
+          display: block;
+        }
+
+        .site-navbar__mobile-sublink {
+          display: block;
+          text-decoration: none;
+          color: rgba(255, 255, 255, 0.88);
+          font-size: 0.9rem;
+          font-weight: 500;
+          padding: 0.42rem 0.82rem;
+          white-space: nowrap;
+          border-radius: 6px;
+        }
+
+        .site-navbar__mobile-sublink:hover {
+          color: var(--color-highlight);
+          background: rgba(250, 204, 21, 0.1);
+        }
+
+        .site-navbar__mobile-link:hover,
+        .site-navbar__mobile-link--active {
+          color: var(--color-highlight);
+          background: rgba(250, 204, 21, 0.1);
+        }
+
+        @media (max-width: 480px) {
+          .site-navbar__brand {
+            gap: 0.42rem;
+            max-width: 76vw;
           }
-          to {
-            transform: translateX(0);
+
+          .site-navbar__badge {
+            font-size: 0.6rem;
+            width: 30px;
+            height: 30px;
+          }
+
+          .site-navbar__name {
+            display: inline;
+            font-size: clamp(0.82rem, 3.1vw, 0.94rem);
+            font-weight: 700;
+            max-width: 58vw;
           }
         }
 
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
+        @media (max-width: 360px) {
+          .site-navbar__name {
+            font-size: clamp(0.76rem, 3vw, 0.84rem);
+            max-width: 54vw;
           }
-          to {
-            opacity: 1;
-          }
-        }
-        
-        @media (max-width: 1023px) {
-          .hamburger-btn {
-            display: block !important;
-          }
-          .desktop-nav {
-            display: none !important;
+
+          .site-navbar__mobile-panel {
+            right: 0.5rem;
+            width: 220px;
+            min-width: 220px;
+            max-width: 220px;
+            max-height: 320px;
           }
         }
-        
-        @media (min-width: 1024px) {
-          .hamburger-btn {
-            display: none !important;
+
+        @media (max-width: 767px) {
+          .site-navbar {
+            width: 100%;
+            margin: 0;
+            border-radius: 0;
+            padding: 0.75rem 1rem !important;
           }
-          .desktop-nav {
-            display: flex !important;
+
+          .site-navbar__mobile-panel {
+            width: 240px;
+            min-width: 240px;
+            max-width: 240px;
+            max-height: 360px;
+          }
+        }
+
+        @media (min-width: 768px) {
+          .site-navbar {
+            padding: 0.8rem 1.5rem !important;
+            gap: 1.25rem;
+          }
+
+          .site-navbar__desktop-links {
+            display: flex;
+          }
+
+          .site-navbar__name {
+            font-size: clamp(0.98rem, 1.2vw, 1.15rem);
+          }
+
+          .site-navbar__cta {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+          }
+
+          .site-navbar__hamburger,
+          .site-navbar__mobile-panel {
+            display: none;
+          }
+        }
+
+        @media (min-width: 1200px) {
+          .site-navbar {
+            padding: 0.9rem 2rem !important;
+          }
+
+          .site-navbar__desktop-links {
+            gap: 1.55rem;
+          }
+
+          .site-navbar__name {
+            font-size: 1.28rem;
           }
         }
       `}</style>
-    </nav>
+    </>
   );
 };

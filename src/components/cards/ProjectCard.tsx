@@ -1,14 +1,17 @@
 import { Project } from "../../constants/projects";
+import { useNavigate } from "react-router-dom";
 
 interface ProjectCardProps {
   project: Project;
 }
 
 export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
+  const navigate = useNavigate();
+
   const typeColor = {
-    residential: "#3B82F6",
-    commercial: "#8B5CF6",
-    municipal: "#10B981",
+    residential: "var(--color-brand-base)",
+    commercial: "var(--accent-orange)",
+    municipal: "var(--color-brand-base)",
   };
 
   return (
@@ -16,7 +19,9 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
       <div className="project-card-image">
         <img src={project.image} alt={project.name} />
         <div className="project-overlay">
-          <button className="view-project-btn">View Project →</button>
+          <button className="view-project-btn" onClick={() => navigate("/contact")}>
+            View Project {"->"}
+          </button>
         </div>
       </div>
       <div className="project-card-content">
@@ -34,8 +39,8 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
 
         {project.location && (
           <div className="project-meta">
-            <span>📍 {project.location}</span>
-            {project.completionDate && <span>📅 {project.completionDate}</span>}
+            <span>Location: {project.location}</span>
+            {project.completionDate && <span>Completed: {project.completionDate}</span>}
           </div>
         )}
 
@@ -51,3 +56,5 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
     </div>
   );
 };
+
+

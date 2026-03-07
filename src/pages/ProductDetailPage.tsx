@@ -86,9 +86,13 @@ export const ProductDetailPage: React.FC = () => {
             </ul>
           </div>
 
-          <button className="cta-button">Request Quote</button>
+          <Link to="/contact" className="cta-button" style={{ textDecoration: "none" }}>
+            Request Quote
+          </Link>
         </div>
       </div>
     </div>
   );
 };
+
+

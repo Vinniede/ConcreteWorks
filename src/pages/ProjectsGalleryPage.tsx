@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { projects } from "../constants/projects";
 import { ProjectCard } from "../components/cards/ProjectCard";
 import { CalculatorModal } from "../components/modals/CalculatorModal";
@@ -6,14 +7,15 @@ import { CalculatorModal } from "../components/modals/CalculatorModal";
 export const ProjectsGalleryPage: React.FC = () => {
   const [filter, setFilter] = useState<string>("all");
   const [showCalculator, setShowCalculator] = useState(false);
+  const navigate = useNavigate();
 
   const filteredProjects =
     filter === "all" ? projects : projects.filter((p) => p.type === filter);
 
   return (
-    <div>
-      {/* Hero Section */}
+    <div className="projects-page">
       <div
+        className="projects-hero"
         style={{
           background:
             "linear-gradient(135deg, var(--primary-blue), var(--primary-blue-light))",
@@ -32,6 +34,7 @@ export const ProjectsGalleryPage: React.FC = () => {
       </div>
 
       <div
+        className="projects-main"
         style={{
           width: "100%",
           maxWidth: "1200px",
@@ -39,8 +42,8 @@ export const ProjectsGalleryPage: React.FC = () => {
           padding: "0.5rem 1rem",
         }}
       >
-        {/* Filter Buttons */}
         <div
+          className="projects-filter"
           style={{
             display: "flex",
             gap: "1rem",
@@ -51,6 +54,7 @@ export const ProjectsGalleryPage: React.FC = () => {
         >
           {["all", "residential", "commercial", "municipal"].map((type) => (
             <button
+              className="projects-filter-btn"
               key={type}
               onClick={() => setFilter(type)}
               style={{
@@ -87,12 +91,12 @@ export const ProjectsGalleryPage: React.FC = () => {
           ))}
         </div>
 
-        {/* Projects Grid */}
         <div
+          className="projects-grid"
           style={{
             display: "flex",
             flexWrap: "wrap",
-            gap: "1rem",
+            gap: "2rem",
             marginBottom: "4rem",
             justifyContent: "center",
             width: "100%",
@@ -100,11 +104,12 @@ export const ProjectsGalleryPage: React.FC = () => {
         >
           {filteredProjects.map((project) => (
             <div
+              className="projects-grid-item"
               key={project.id}
               style={{
-                flex: "0 1 220px",
-                minWidth: "200px",
-                maxWidth: "300px",
+                flex: "0 1 350px",
+                minWidth: "280px",
+                maxWidth: "450px",
               }}
             >
               <ProjectCard project={project} />
@@ -112,8 +117,8 @@ export const ProjectsGalleryPage: React.FC = () => {
           ))}
         </div>
 
-        {/* Project Stats */}
         <div
+          className="projects-stats"
           style={{
             background: "var(--bg-secondary)",
             padding: "clamp(1.5rem, 3vw, 3rem) clamp(1rem, 2vw, 2rem)",
@@ -124,6 +129,7 @@ export const ProjectsGalleryPage: React.FC = () => {
         >
           <h2 style={{ marginBottom: "2rem" }}>Our Project Portfolio</h2>
           <div
+            className="projects-stats-grid"
             style={{
               display: "grid",
               gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))",
@@ -179,8 +185,8 @@ export const ProjectsGalleryPage: React.FC = () => {
         </div>
       </div>
 
-      {/* CALCULATOR SECTION */}
       <div
+        className="projects-calculator"
         style={{
           maxWidth: "1200px",
           margin: "0 auto",
@@ -196,7 +202,7 @@ export const ProjectsGalleryPage: React.FC = () => {
             fontWeight: "bold",
           }}
         >
-          💰 Plan Your Project Budget
+          Plan Your Project Budget
         </h2>
         <p
           style={{
@@ -225,7 +231,7 @@ export const ProjectsGalleryPage: React.FC = () => {
             boxShadow: "var(--shadow-lg)",
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.background = "#EA580C";
+            e.currentTarget.style.background = "var(--color-action-primary-hover)";
             e.currentTarget.style.transform = "translateY(-2px)";
           }}
           onMouseLeave={(e) => {
@@ -237,12 +243,11 @@ export const ProjectsGalleryPage: React.FC = () => {
         </button>
       </div>
 
-      {/* CTA Section */}
       <div
+        className="projects-cta"
         style={{
-          background:
-            "linear-gradient(135deg, var(--primary-blue), var(--primary-blue-light))",
-          color: "white",
+          background: "var(--pre-footer-bg)",
+          color: "var(--text-primary)",
           padding: "4rem 1rem",
           textAlign: "center",
         }}
@@ -260,6 +265,7 @@ export const ProjectsGalleryPage: React.FC = () => {
           consultation and project quote.
         </p>
         <button
+          onClick={() => navigate("/contact")}
           style={{
             background: "var(--accent-orange)",
             color: "white",
@@ -282,11 +288,134 @@ export const ProjectsGalleryPage: React.FC = () => {
         </button>
       </div>
 
-      {/* Calculator Modal */}
       <CalculatorModal
         isOpen={showCalculator}
         onClose={() => setShowCalculator(false)}
       />
+
+      <style>{`
+        .projects-page {
+          overflow-x: hidden;
+        }
+
+        .projects-main,
+        .projects-calculator {
+          width: 100%;
+          box-sizing: border-box;
+        }
+
+        .projects-filter-btn {
+          white-space: nowrap;
+        }
+
+        .projects-grid-item {
+          min-width: 0;
+        }
+
+        @media (max-width: 1024px) {
+          .projects-grid {
+            gap: 1.25rem !important;
+          }
+
+          .projects-grid-item {
+            flex: 0 1 calc(50% - 0.75rem) !important;
+            min-width: 0 !important;
+            max-width: none !important;
+          }
+        }
+
+        @media (max-width: 768px) {
+          .projects-hero {
+            padding: 2.5rem 0.75rem !important;
+            margin-bottom: 2rem !important;
+          }
+
+          .projects-hero h1 {
+            font-size: 1.75rem !important;
+          }
+
+          .projects-hero p {
+            font-size: 1rem !important;
+          }
+
+          .projects-main {
+            padding: 0.25rem 0.75rem !important;
+          }
+
+          .projects-filter {
+            gap: 0.5rem !important;
+            margin-bottom: 1.25rem !important;
+          }
+
+          .projects-filter-btn {
+            font-size: 0.88rem !important;
+            padding: 0.58rem 0.85rem !important;
+            border-width: 1px !important;
+          }
+
+          .projects-grid {
+            gap: 1rem !important;
+            margin-bottom: 2.5rem !important;
+          }
+
+          .projects-grid-item {
+            flex: 1 1 100% !important;
+            max-width: 100% !important;
+          }
+
+          .projects-stats h2 {
+            font-size: 1.4rem !important;
+            margin-bottom: 1.25rem !important;
+          }
+
+          .projects-stats-grid {
+            grid-template-columns: 1fr !important;
+            gap: 1rem !important;
+          }
+
+          .projects-calculator {
+            padding: 2.5rem 0.75rem !important;
+          }
+
+          .projects-calculator h2 {
+            font-size: 1.6rem !important;
+          }
+
+          .projects-calculator p,
+          .projects-cta p {
+            font-size: 0.98rem !important;
+          }
+
+          .projects-calculator button,
+          .projects-cta button {
+            width: 100%;
+            max-width: 320px;
+          }
+
+          .projects-cta {
+            padding: 2.5rem 0.75rem !important;
+          }
+
+          .projects-cta h2 {
+            font-size: 1.45rem !important;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .projects-main,
+          .projects-calculator {
+            padding-left: 0.5rem !important;
+            padding-right: 0.5rem !important;
+          }
+
+          .projects-filter-btn {
+            width: 100%;
+            max-width: 320px;
+          }
+        }
+      `}</style>
     </div>
   );
 };
+
+

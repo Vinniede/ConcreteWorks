@@ -1,15 +1,27 @@
 import { Design } from "../../constants/designs";
+import { useNavigate } from "react-router-dom";
 
 interface DesignCardProps {
   design: Design;
 }
 
 export const DesignCard: React.FC<DesignCardProps> = ({ design }) => {
-  const difficultyColor = {
-    easy: "#10B981",
-    medium: "#F59E0B",
-    hard: "#EF4444",
-  };
+  const navigate = useNavigate();
+
+  const difficultyStyle = {
+    easy: {
+      background: "var(--color-brand-base)",
+      color: "var(--text-light)",
+    },
+    medium: {
+      background: "var(--color-highlight)",
+      color: "var(--text-primary)",
+    },
+    hard: {
+      background: "var(--color-danger)",
+      color: "var(--text-light)",
+    },
+  } as const;
 
   return (
     <div className="design-card">
@@ -17,7 +29,7 @@ export const DesignCard: React.FC<DesignCardProps> = ({ design }) => {
         <img src={design.image} alt={design.name} />
         <div
           className="design-badge"
-          style={{ background: difficultyColor[design.difficulty] }}
+          style={difficultyStyle[design.difficulty]}
         >
           {design.difficulty.charAt(0).toUpperCase() +
             design.difficulty.slice(1)}
@@ -39,8 +51,12 @@ export const DesignCard: React.FC<DesignCardProps> = ({ design }) => {
           </div>
         </div>
 
-        <button className="view-design-btn">View Details →</button>
+        <button className="view-design-btn" onClick={() => navigate("/contact")}>
+          View Details {"->"}
+        </button>
       </div>
     </div>
   );
 };
+
+

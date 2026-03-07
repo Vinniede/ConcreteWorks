@@ -160,3 +160,5 @@ const GalleryCard = ({ project, onView }: GalleryCardProps) => {
 };
 
 export default GalleryCard;
+
+

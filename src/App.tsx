@@ -1,4 +1,11 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { useEffect } from "react";
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+  useLocation,
+} from "react-router-dom";
 import { Navbar } from "./components/common/Navbar";
 import { Footer } from "./components/common/Footer";
 import { WhatsAppButton } from "./components/common/WhatsAppButton";
@@ -11,9 +18,17 @@ import { DesignsPage } from "./pages/DesignsPage";
 import { ProjectsGalleryPage } from "./pages/ProjectsGalleryPage";
 import { ContactPage } from "./pages/ContactPage";
 import { AboutPage } from "./pages/AboutPage";
-import { TestimonialsPage } from "./pages/TestimonialsPage";
-import { ResourcesPage } from "./pages/ResourcesPage";
-import { CareersPage } from "./pages/CareersPage";
+import { CaseStudiesPage } from "./pages/CaseStudiesPage";
+
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  }, [pathname]);
+
+  return null;
+};
 
 function App() {
   return (
@@ -21,6 +36,7 @@ function App() {
       <div
         style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
       >
+        <ScrollToTop />
         <Navbar />
 
         <main style={{ flex: 1 }}>
@@ -41,9 +57,7 @@ function App() {
             <Route path="/designs" element={<DesignsPage />} />
             <Route path="/projects" element={<ProjectsGalleryPage />} />
             <Route path="/about" element={<AboutPage />} />
-            <Route path="/testimonials" element={<TestimonialsPage />} />
-            <Route path="/resources" element={<ResourcesPage />} />
-            <Route path="/careers" element={<CareersPage />} />
+            <Route path="/case-studies" element={<CaseStudiesPage />} />
             <Route path="/contact" element={<ContactPage />} />
 
             {/* Fallback */}
